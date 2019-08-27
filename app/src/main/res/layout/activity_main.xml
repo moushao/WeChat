@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+    >
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <com.tw.wechat.widget.pullryc.CircleRecyclerView
+            android:id="@+id/recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </FrameLayout>
+
+    <!--<com.langbai.tdhd.circle.commentwidget.CommentBox-->
+    <!--android:id="@+id/widget_comment"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"/>-->
+</LinearLayout>

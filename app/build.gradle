@@ -1,0 +1,51 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.1"
+    defaultConfig {
+        applicationId "com.tw.wechat"
+        minSdkVersion 16
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    //黄油刀
+//    annotationProcessor rootProject.ext.dependencies["butterknife_compiler"]
+//    api rootProject.ext.dependencies["butterknife"]
+    //网络
+    implementation rootProject.ext.dependencies["retrofit2"]
+    implementation rootProject.ext.dependencies["converter-gson"]
+    implementation rootProject.ext.dependencies["adapter-rxjava2"]
+    implementation rootProject.ext.dependencies["rxjava2:rxandroid"]
+    implementation rootProject.ext.dependencies["rxjava2"]
+    //recyclerview
+    implementation rootProject.ext.dependencies["recyclerview-v7"]
+
+    implementation 'me.everything:overscroll-decor-android:1.0.3'
+    //VLayout
+    implementation(rootProject.ext.dependencies["vlayout"]) {
+        transitive = true
+    }
+    //图片加载框架
+    implementation rootProject.ext.dependencies["glide"]
+
+    implementation 'org.apmem.tools:layouts:1.10@aar'
+    implementation 'com.github.razerdp:BasePopup:2.2.1'
+}

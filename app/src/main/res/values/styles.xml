@@ -1,0 +1,31 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="base_divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0.5dp</item>
+        <item name="android:background">@color/gray_divider</item>
+    </style>
+
+    <declare-styleable name="ClickShowMoreLayout">
+        <attr name="show_line"
+              format="integer"/>
+        <attr name="click_text"
+              format="string"/>
+        <attr name="text_color"
+              format="color"/>
+        <attr name="text_size"
+              format="dimension"/>
+    </declare-styleable>
+
+    <style name="base_divider_top_20" parent="base_divider">
+        <item name="android:layout_marginTop">20dp</item>
+    </style>
+</resources>
