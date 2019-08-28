@@ -109,12 +109,6 @@ public abstract class CircleBaseViewHolder extends BaseRecyclerViewHolder<Tweet>
 
     @Override
     public void onBindData(Tweet data, int position) {
-        if (data == null) {
-            LogUtil.e("数据是空的！！！！");
-            findView(userText, R.id.item_text_field);
-            userText.setText("这个动态的数据是空的。。。。OMG");
-            return;
-        }
         this.momentsInfo = data;
         this.itemPosition = position;
         //通用数据绑定
@@ -134,16 +128,21 @@ public abstract class CircleBaseViewHolder extends BaseRecyclerViewHolder<Tweet>
 
     private void onBindMutualDataToViews(Tweet data) {
         //header
-        ImageLoadManager.INSTANCE.loadImage(avatar, data.getSender().getAvatar());
+        ImageLoadManager.INSTANCE.loadImageWithRadius(avatar, data.getSender().getAvatar(), R.mipmap.ic_launcher, 20);
 
-        nick.setText(data.getSender().getNick());
+        nick.setText(data.getSender().getNick() + ":" + data.position);
+        if (itemPosition == 14) {
+            LogUtil.e("Tweet", data.getContent());
+        }
         if (TextUtils.isEmpty(data.getContent())) {
             userText.setVisibility(View.GONE);
         } else {
-            userText.setText(data.getContent());
+            if (!userText.getText().toString().equals(data.getContent()))
+                userText.setText(data.getContent(), itemPosition);
+            userText.setVisibility(View.VISIBLE);
         }
         boolean needCommentData = addComment(data.getComments());
-        commentLayout.setVisibility(needCommentData ? View.VISIBLE : View.GONE);
+        commentAndPraiseLayout.setVisibility(needCommentData ? View.VISIBLE : View.GONE);
         createTime.setText("3分钟前");
     }
 

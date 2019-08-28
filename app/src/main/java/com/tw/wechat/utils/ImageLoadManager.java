@@ -30,20 +30,11 @@ import androidx.annotation.Nullable;
 
 public enum ImageLoadManager {
     INSTANCE;
-    private Context mContext;
     RoundedCorners mCorners = new RoundedCorners(30);
     private RequestOptions options = new RequestOptions()
-            .placeholder(R.drawable.login_head)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .error(R.mipmap.ic_launcher)
             .priority(Priority.HIGH)
             .transform(mCorners);
-    private RequestOptions optionsHead = new RequestOptions()
-            .centerCrop()
-            .placeholder(R.drawable.login_head)
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .error(R.drawable.login_head)
-            .priority(Priority.HIGH);
 
     public void clearMemory(Context context) {
         Glide.get(context).clearMemory();
@@ -57,26 +48,29 @@ public enum ImageLoadManager {
 
     }
 
-    public void loadImage(final ImageView imageView, String imgUrl) {
-        int radius = 20;
+    public void loadImage(final ImageView imageView, String imgUrl, int holderDrawable, int thumbDrawable) {
         try {
-            imgUrl = "https://upload.jianshu.io/users/upload_avatars/927828/1cb87269-4e94-4369-ac57-e2beedf4975a" +
-                    ".png?imageMogr2/auto-orient/strip|imageView2/1/w/80/h/80";
+            options.error(thumbDrawable)
+                    .placeholder(holderDrawable);
             Glide.with(getImageContext(imageView))
                     .load(imgUrl)
-                    .apply(new RequestOptions().transform(new RoundedCorners(radius)))
-                    .thumbnail(loadTransform(imageView.getContext(), R.mipmap.ic_launcher, radius))
+                    .apply(options)
+                    //.thumbnail(loadTransform(imageView.getContext(), thumbDrawable, 0))
                     .into(imageView);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void loadImageErrorHead(ImageView imageView, String imgUrl) {
+    public void loadImageWithRadius(final ImageView imageView, String imgUrl, int thumbDrawable, int radius) {
         try {
-            Glide.with(getImageContext(imageView)).load(imgUrl).apply(optionsHead).into(imageView);
+            Glide.with(getImageContext(imageView))
+                    .load(imgUrl)
+                    .apply(new RequestOptions().transform(new RoundedCorners(radius)))
+                    .thumbnail(loadTransform(imageView.getContext(), thumbDrawable, radius))
+                    .into(imageView);
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
 
@@ -96,10 +90,6 @@ public enum ImageLoadManager {
     public void loadImageDontAnimate(ImageView imageView, String imgUrl) {
         Glide.with(getImageContext(imageView)).load(imgUrl).apply(options).into(imageView);
 
-    }
-
-    public void loadImage(ImageView imageView, String imgUrl, int width, int height) {
-        options.override(width, height);
     }
 
 

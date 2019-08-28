@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Tweet {
+    public int position;
     private String content;
     private List<Photo> images;
     private Sender sender;
@@ -38,12 +39,18 @@ public class Tweet {
 
     public List<Comment> getComments() {
         if (comments == null) {
-            return new ArrayList<>();
+            comments = new ArrayList<>();
         }
         return comments;
     }
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    public boolean isQualified() {
+        if (content == null && (images == null || images.size() == 0))
+            return false;
+        return true;
     }
 }

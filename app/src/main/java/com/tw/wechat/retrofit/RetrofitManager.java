@@ -51,7 +51,7 @@ public class RetrofitManager {
         return new Retrofit.Builder()
                 .client(mClient)
                 .baseUrl(HOST_NAME)
-                .addConverterFactory(CustomGsonConverterFactory.create())
+                //.addConverterFactory(CustomGsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
     }

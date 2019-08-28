@@ -17,7 +17,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-
 /**
  * Created by 大灯泡 on 2016/7/20.
  * <p>
@@ -111,7 +110,7 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
     }
 
     public void addMore(List<T> datas) {
-        if (datas!=null && datas.size()>0) {
+        if (datas != null && datas.size() > 0) {
             this.datas.addAll(datas);
             notifyDataSetChanged();
         }
@@ -174,5 +173,10 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
 
     public void setOnRecyclerViewLongItemClickListener(OnRecyclerViewLongItemClickListener<T> onRecyclerViewLongItemClickListener) {
         this.onRecyclerViewLongItemClickListener = onRecyclerViewLongItemClickListener;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 }

@@ -3,6 +3,8 @@ package com.tw.wechat.common;
 import android.app.Application;
 import android.app.NotificationManager;
 
+import com.tw.wechat.utils.CrashHandler;
+
 /**
  * 类名: MyApplication
  * <br/> 功能描述:
@@ -17,6 +19,7 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         mMyApplication = this;
+        CrashHandler.getInstance().init(this);
     }
 
     public static MyApplication getApplication() {

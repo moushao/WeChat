@@ -48,19 +48,13 @@ public class HostViewHolder {
         });
     }
 
-    public void loadHostData(User hostInfo) {
-        if (hostInfo == null)
+    public void loadHostData(User user) {
+        if (user == null)
             return;
 
-        ImageLoadManager.INSTANCE.loadImage(friend_avatar, "");
-
-        Glide.with(mContext).load(hostInfo.getProfile())
-                .apply(options
-                        .placeholder(R.drawable.pic_faith)
-                        .error(R.drawable.pic_faith))
-                .into(friend_wall_pic);
-
-        hostid.setText(hostInfo.getNick());
+        ImageLoadManager.INSTANCE.loadImageWithRadius(friend_avatar, user.getAvatar(), R.mipmap.ic_launcher, 20);
+        ImageLoadManager.INSTANCE.loadImage(friend_wall_pic, user.getProfile(), R.mipmap.ic_launcher, R.drawable.pic_faith);
+        hostid.setText(user.getNick());
     }
 
     public View getView() {

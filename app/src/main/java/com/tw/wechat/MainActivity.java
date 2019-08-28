@@ -2,7 +2,6 @@ package com.tw.wechat;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -10,11 +9,11 @@ import com.tw.wechat.adapter.CircleMomentsAdapter;
 import com.tw.wechat.adapter.HostViewHolder;
 import com.tw.wechat.adapter.MultiImageMomentsVH;
 import com.tw.wechat.entity.Comment;
-import com.tw.wechat.entity.Sender;
 import com.tw.wechat.entity.Tweet;
 import com.tw.wechat.entity.User;
 import com.tw.wechat.event.CallBack;
 import com.tw.wechat.event.ItemListener;
+import com.tw.wechat.event.OnRefreshListener2;
 import com.tw.wechat.event.ViewListener;
 import com.tw.wechat.model.MainModel;
 import com.tw.wechat.utils.ToastUtils;
@@ -23,14 +22,12 @@ import com.tw.wechat.widget.commentwidget.CommentBox;
 import com.tw.wechat.widget.commentwidget.CommentWidget;
 import com.tw.wechat.widget.commentwidget.KeyboardControlMnanager;
 import com.tw.wechat.widget.pullryc.CircleRecyclerView;
-import com.tw.wechat.event.OnRefreshListener2;
 
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class MainActivity extends AppCompatActivity implements
-        CircleRecyclerView.OnPreDispatchTouchListener, CallBack {
+public class MainActivity extends AppCompatActivity implements CircleRecyclerView.OnPreDispatchTouchListener, CallBack {
     CircleRecyclerView circleRecyclerView;
     private HostViewHolder hostViewHolder;
     private Context mContext;
@@ -76,7 +73,6 @@ public class MainActivity extends AppCompatActivity implements
                 .addType(MultiImageMomentsVH.class, 2, R.layout.moments_multi_image)
                 .setListener(viewListener)
                 .build();
-
         circleRecyclerView.setAdapter(adapter);
         initKeyboardHeightObserver();
     }

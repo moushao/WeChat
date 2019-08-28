@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 
+import com.tw.wechat.adapter.CircleBaseViewHolder;
 import com.tw.wechat.event.OnRefreshListener2;
 
 import android.util.AttributeSet;
@@ -354,8 +355,7 @@ public class CircleRecyclerView extends FrameLayout {
             if (scrollSize <= refreshPosition) {
                 refreshIcon.offsetTopAndBottom(-dy);
             }
-
-            LogUtil.e("scrollSize", scrollSize + "");
+            //LogUtil.e("scrollSize", scrollSize + "");
         }
     };
 

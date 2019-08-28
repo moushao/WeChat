@@ -7,6 +7,8 @@ import com.tw.wechat.entity.User;
 import java.util.List;
 
 import io.reactivex.Observable;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 import retrofit2.http.GET;
 
 /**
@@ -19,8 +21,8 @@ import retrofit2.http.GET;
  */
 public interface TweetApi {
     @GET("user/jsmith/")
-    Observable<User> getUserInfo();
+    Observable<ResponseBody> getUserInfo();
 
     @GET("user/jsmith/tweets/")
-    Observable<List<Tweet>> getTweets();
+    Observable<ResponseBody> getTweets();
 }

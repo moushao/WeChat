@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.SizeF;
 import android.util.SparseIntArray;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.tw.wechat.R;
+import com.tw.wechat.utils.LogUtil;
 import com.tw.wechat.utils.UIHelper;
 
 
@@ -58,7 +60,8 @@ public class ClickShowMoreLayout extends LinearLayout implements View.OnClickLis
         textSize = a.getDimensionPixelSize(R.styleable.ClickShowMoreLayout_text_size, 14);
         showLine = a.getInt(R.styleable.ClickShowMoreLayout_show_line, 8);
         clickText = a.getString(R.styleable.ClickShowMoreLayout_click_text);
-        if (TextUtils.isEmpty(clickText)) clickText = "全文";
+        if (TextUtils.isEmpty(clickText))
+            clickText = "全文";
         a.recycle();
 
         initView(context);
@@ -79,7 +82,7 @@ public class ClickShowMoreLayout extends LinearLayout implements View.OnClickLis
         mClickToShow.setText(clickText);
 
         LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                                                                         ViewGroup.LayoutParams.WRAP_CONTENT);
+                ViewGroup.LayoutParams.WRAP_CONTENT);
         params.topMargin = UIHelper.dipToPx(10f);
         mClickToShow.setLayoutParams(params);
         mClickToShow.setOnClickListener(this);
@@ -109,8 +112,10 @@ public class ClickShowMoreLayout extends LinearLayout implements View.OnClickLis
         }
         TEXT_STATE.put(getText().toString().hashCode(), state);
     }
-
-    public void setText(String str) {
+int posr ;
+    public void setText(String str, int pos) {
+        LogUtil.e("pos",posr+":"+pos);
+        posr = pos;
         if (hasGetLineCount) {
             restoreState(str);
             mTextView.setText(str);
