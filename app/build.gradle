@@ -45,6 +45,7 @@ dependencies {
     }
     //图片加载框架
     implementation rootProject.ext.dependencies["glide"]
+    annotationProcessor rootProject.ext.dependencies["glide:compiler"]
 
     implementation 'org.apmem.tools:layouts:1.10@aar'
     implementation 'com.github.razerdp:BasePopup:2.2.1'

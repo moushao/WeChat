@@ -30,13 +30,13 @@ public class ToastUtils {
      */
     public static void showToast(Context context, String message) {
         if (toast == null) {
-            toast = Toast.makeText(context, message, Toast.LENGTH_LONG);
+            toast = Toast.makeText(context, message, Toast.LENGTH_SHORT);
             toast.show();
             oneTime = System.currentTimeMillis();
         } else {
             twoTime = System.currentTimeMillis();
             if (oldMsg.equals(message)) {
-                if (twoTime - oneTime > Toast.LENGTH_LONG) {
+                if (twoTime - oneTime > Toast.LENGTH_SHORT) {
                     toast.show();
                 }
             } else {

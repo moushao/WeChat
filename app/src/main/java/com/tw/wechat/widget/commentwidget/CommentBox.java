@@ -41,7 +41,6 @@ public class CommentBox extends FrameLayout {
     private String draftString;
 
     private Comment commentInfo;
-    private Long statusID;
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({CommentType.TYPE_CREATE, CommentType.TYPE_REPLY})
@@ -73,20 +72,19 @@ public class CommentBox extends FrameLayout {
         mSend.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (onCommentSendClickListener != null)
+                if (onCommentSendClickListener != null) {
                     onCommentSendClickListener.onCommentSendClick(
-                            v,
-                            statusID,
                             commentInfo == null ? null : commentInfo,
                             mInputContent.getText().toString().trim());
+                }
             }
         });
         setVisibility(GONE);
     }
 
-    public void showCommentBox(@NonNull Long statusID, @Nullable Comment commentInfo) {
-//        if (TextUtils.isEmpty(statusID))
-//            return;
+    public void showCommentBox(@Nullable Comment commentInfo) {
+        //        if (TextUtils.isEmpty(statusID))
+        //            return;
         if (isShowing)
             return;
         this.isShowing = true;
@@ -98,13 +96,7 @@ public class CommentBox extends FrameLayout {
             mInputContent.setHint("评论");
         }
         //对于同一条动态恢复草稿，否则不恢复
-        if (TextUtils.equals(statusID+"", this.statusID+"") && StringUtil.noEmpty(draftString)) {
-            mInputContent.setText(draftString);
-            mInputContent.setSelection(draftString.length());
-        } else {
-            mInputContent.setText(null);
-        }
-        setMomentid(statusID);
+        mInputContent.setText(null);
         setVisibility(VISIBLE);
         UIHelper.showInputMethod(mInputContent, 150);
     }
@@ -125,15 +117,14 @@ public class CommentBox extends FrameLayout {
     /**
      * 切换评论框的状态
      *
-     * @param statusID
      * @param commentInfo
      * @param clearDraft  是否清除草稿
      */
-    public void toggleCommentBox(@NonNull long statusID, @Nullable Comment commentInfo, boolean clearDraft) {
+    public void toggleCommentBox(@Nullable Comment commentInfo, boolean clearDraft) {
         if (isShowing) {
             dismissCommentBox(clearDraft);
         } else {
-            showCommentBox(statusID, commentInfo);
+            showCommentBox(commentInfo);
         }
     }
 
@@ -143,15 +134,6 @@ public class CommentBox extends FrameLayout {
 
     public void clearDraft() {
         this.draftString = null;
-    }
-
-
-    public Long getMomentid() {
-        return statusID;
-    }
-
-    public void setMomentid(Long statusID) {
-        this.statusID = statusID;
     }
 
     public Comment getCommentInfo() {
@@ -186,6 +168,6 @@ public class CommentBox extends FrameLayout {
     }
 
     public interface OnCommentSendClickListener {
-        void onCommentSendClick(View v, Long statusID, Comment commentInfo, String commentContent);
+        void onCommentSendClick(Comment commentInfo, String commentContent);
     }
 }

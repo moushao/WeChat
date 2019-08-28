@@ -154,16 +154,14 @@ public class CircleRecyclerView extends FrameLayout {
             refreshIcon = new ImageView(context);
             refreshIcon.setBackgroundColor(Color.TRANSPARENT);
             refreshIcon.setImageResource(R.drawable.rotate_icon);
+            refreshIcon.setVisibility(GONE);
         }
         LayoutParams iconParam = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams
                 .WRAP_CONTENT);
         iconParam.leftMargin = UIHelper.dipToPx(12);
-
         addView(recyclerView, RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.MATCH_PARENT);
         addView(refreshIcon, iconParam);
-
         refreshPosition = UIHelper.dipToPx(90);
-
         iconObserver = new InnerRefreshIconObserver(refreshIcon, refreshPosition);
 
         footerView = new PullRefreshFooter(getContext());
@@ -345,21 +343,23 @@ public class CircleRecyclerView extends FrameLayout {
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             super.onScrolled(recyclerView, dx, dy);
-            LogUtil.e("recyclerView", "dx-" + dx + ": dy-" + dy);
+            scrollSize = scrollSize + dy;
             if (isScrollToBottom() && currentStatus != Status.REFRESHING) {
                 footerView.onRefreshing();
                 pullMode = Mode.FROM_BOTTOM;
-                Log.i("loadmoretag", "loadmore");
                 setCurrentStatus(Status.REFRESHING);
                 onRefreshListener.onLoadMore();
             }
 
-            if (dy > 0) {
-                iconObserver.catchPullEvent(dy);
+            if (scrollSize <= refreshPosition) {
+                refreshIcon.offsetTopAndBottom(-dy);
             }
+
+            LogUtil.e("scrollSize", scrollSize + "");
         }
     };
 
+    int scrollSize;
 
     /**
      * 刷新Icon的动作观察者
@@ -402,7 +402,7 @@ public class CircleRecyclerView extends FrameLayout {
          * 调整icon的位置界限
          */
         private void adjustRefreshIconPosition() {
-            LogUtil.e("refreshIcon.getY()", refreshIcon.getY()+"");
+            LogUtil.e("refreshIcon.getY()", refreshIcon.getY() + "");
             if (refreshIcon.getY() < 0) {
                 refreshIcon.offsetTopAndBottom(Math.abs(refreshIcon.getTop()));
             } else if (refreshIcon.getY() > refreshPosition) {

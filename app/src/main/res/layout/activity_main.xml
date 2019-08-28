@@ -18,8 +18,8 @@
             android:layout_height="match_parent"/>
     </FrameLayout>
 
-    <!--<com.langbai.tdhd.circle.commentwidget.CommentBox-->
-    <!--android:id="@+id/widget_comment"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"/>-->
+    <com.tw.wechat.widget.commentwidget.CommentBox
+        android:id="@+id/widget_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 </LinearLayout>

@@ -54,11 +54,12 @@ public class CommentWidget extends TextView {
         setTextSize(textSize);
     }
 
-    public void setCommentText(Comment info) {
+    public void setCommentText(Comment info,int commentPosition) {
         if (info == null)
             return;
         try {
             setTag(info);
+            this.commentPositon = commentPosition;
             createCommentStringBuilder(info);
         } catch (NullPointerException e) {
             e.printStackTrace();

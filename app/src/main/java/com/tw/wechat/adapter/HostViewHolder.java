@@ -13,6 +13,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.tw.wechat.R;
 import com.tw.wechat.entity.User;
 import com.tw.wechat.event.ItemListener;
+import com.tw.wechat.utils.ImageLoadManager;
 
 
 public class HostViewHolder {
@@ -51,15 +52,12 @@ public class HostViewHolder {
         if (hostInfo == null)
             return;
 
-        Glide.with(mContext).load("https://upload.jianshu.io/users/upload_avatars/927828/1cb87269-4e94-4369-ac57-e2beedf4975a.png?imageMogr2/auto-orient/strip|imageView2/1/w/80/h/80")
-                .apply(options.placeholder(R.drawable.login_head)
-                        .error(R.drawable.login_head))
-                .into(friend_avatar);
+        ImageLoadManager.INSTANCE.loadImage(friend_avatar, "");
 
         Glide.with(mContext).load(hostInfo.getProfile())
                 .apply(options
-                        .placeholder(R.drawable.login_head)
-                        .error(R.drawable.login_head))
+                        .placeholder(R.drawable.pic_faith)
+                        .error(R.drawable.pic_faith))
                 .into(friend_wall_pic);
 
         hostid.setText(hostInfo.getNick());

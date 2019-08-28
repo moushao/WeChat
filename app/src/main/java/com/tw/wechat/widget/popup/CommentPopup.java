@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.tw.wechat.R;
 import com.tw.wechat.entity.Tweet;
+import com.tw.wechat.utils.ToastUtils;
 import com.tw.wechat.utils.UIHelper;
 
 import java.util.List;
@@ -109,6 +110,7 @@ public class CommentPopup extends BasePopupWindow implements View.OnClickListene
                     mLikeView.clearAnimation();
                     mLikeView.startAnimation(mScaleAnimation);
                 }
+                ToastUtils.showToast(mLikeText.getContext(),"点了个赞");
                 break;
             case R.id.item_comment:
                 if (mOnCommentPopupClickListener != null) {

@@ -4,6 +4,11 @@ public class Comment {
     private String content;
     private Sender sender;
 
+    public Comment(Sender sender, String content) {
+        this.content = content;
+        this.sender = sender;
+    }
+
     public String getContent() {
         return content == null ? "" : content;
     }

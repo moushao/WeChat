@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.tw.wechat.entity.Tweet;
+import com.tw.wechat.event.ViewListener;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -26,6 +27,7 @@ public class CircleMomentsAdapter extends BaseRecyclerViewAdapter<Tweet> {
 
 
     private SparseArray<ViewHoldernfo> viewHolderKeyArray;
+    private ViewListener mListener;
 
 
     private CircleMomentsAdapter(@NonNull Context context,
@@ -36,6 +38,7 @@ public class CircleMomentsAdapter extends BaseRecyclerViewAdapter<Tweet> {
     private CircleMomentsAdapter(Builder builder) {
         this(builder.context, builder.datas);
         this.viewHolderKeyArray = builder.viewHolderKeyArray;
+        this.mListener = builder.mListener;
     }
 
     @Override
@@ -53,6 +56,9 @@ public class CircleMomentsAdapter extends BaseRecyclerViewAdapter<Tweet> {
         ViewHoldernfo viewHoldernfo = viewHolderKeyArray.get(viewType);
         if (viewHoldernfo != null) {
             CircleBaseViewHolder circleBaseViewHolder = createCircleViewHolder(context, parent, viewHoldernfo);
+            if (circleBaseViewHolder != null) {
+                circleBaseViewHolder.setEventListener(mListener);
+            }
             return circleBaseViewHolder;
         }
         return null;
@@ -63,6 +69,7 @@ public class CircleMomentsAdapter extends BaseRecyclerViewAdapter<Tweet> {
         private Context context;
         private SparseArray<ViewHoldernfo> viewHolderKeyArray = new SparseArray<>();
         private List<T> datas;
+        private ViewListener mListener;
 
 
         public Builder(Context context) {
@@ -78,6 +85,11 @@ public class CircleMomentsAdapter extends BaseRecyclerViewAdapter<Tweet> {
             info.viewType = viewType;
             info.layoutResID = layoutResId;
             viewHolderKeyArray.put(viewType, info);
+            return this;
+        }
+
+        public Builder<T> setListener(ViewListener listener) {
+            mListener = listener;
             return this;
         }
 

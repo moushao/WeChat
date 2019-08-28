@@ -60,18 +60,18 @@
         android:background="@drawable/comment_praise"
         android:orientation="vertical">
 
-        <com.tw.wechat.widget.PraiseWidget
-            android:id="@+id/praise"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:lineSpacingExtra="2dp"
-            android:lineSpacingMultiplier="1"
-            android:paddingBottom="3dp"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            android:paddingTop="3dp"
-            app:click_bg_color="@color/comment_click_bg"
-            />
+        <!--<com.tw.wechat.widget.PraiseWidget-->
+            <!--android:id="@+id/praise"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:lineSpacingExtra="2dp"-->
+            <!--android:lineSpacingMultiplier="1"-->
+            <!--android:paddingBottom="3dp"-->
+            <!--android:paddingLeft="8dp"-->
+            <!--android:paddingRight="8dp"-->
+            <!--android:paddingTop="3dp"-->
+            <!--app:click_bg_color="@color/comment_click_bg"-->
+            <!--/>-->
 
         <View
             android:id="@+id/divider"

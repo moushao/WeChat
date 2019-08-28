@@ -13,7 +13,6 @@
         android:id="@+id/avatar"
         android:layout_width="@dimen/item_avatar"
         android:layout_height="@dimen/item_avatar"
-        android:scaleType="centerCrop"
         tools:src="@drawable/login_head"/>
 
     <TextView

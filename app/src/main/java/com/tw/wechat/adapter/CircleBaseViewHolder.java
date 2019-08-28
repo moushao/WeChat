@@ -15,12 +15,13 @@ import android.widget.TextView;
 import com.tw.wechat.R;
 import com.tw.wechat.entity.Comment;
 import com.tw.wechat.entity.Tweet;
+import com.tw.wechat.entity.User;
+import com.tw.wechat.event.ViewListener;
 import com.tw.wechat.photo.SimpleObjectPool;
 import com.tw.wechat.utils.ImageLoadManager;
 import com.tw.wechat.utils.LogUtil;
 import com.tw.wechat.utils.UIHelper;
 import com.tw.wechat.widget.ClickShowMoreLayout;
-import com.tw.wechat.widget.PraiseWidget;
 import com.tw.wechat.widget.commentwidget.CommentWidget;
 import com.tw.wechat.widget.popup.CommentPopup;
 import com.tw.wechat.widget.popup.DeleteCommentPopup;
@@ -37,6 +38,7 @@ import androidx.annotation.NonNull;
  */
 public abstract class CircleBaseViewHolder extends BaseRecyclerViewHolder<Tweet> implements
         BaseMomentVH<Tweet>, ViewGroup.OnHierarchyChangeListener {
+    private User mUser;
     protected Context mContext;
 
     //头部
@@ -50,7 +52,7 @@ public abstract class CircleBaseViewHolder extends BaseRecyclerViewHolder<Tweet>
     protected ImageView commentImage;
     protected FrameLayout menuButton;
     protected LinearLayout commentAndPraiseLayout;
-    protected PraiseWidget praiseWidget;
+    //protected PraiseWidget praiseWidget;
     protected View line;
     protected LinearLayout commentLayout;
 
@@ -65,7 +67,7 @@ public abstract class CircleBaseViewHolder extends BaseRecyclerViewHolder<Tweet>
 
     private int itemPosition; //当条朋友圈的位置
     private Tweet momentsInfo;
-
+    private ViewListener mEventListener;
 
     public CircleBaseViewHolder(Context context, ViewGroup viewGroup, int layoutResId) {
         super(context, viewGroup, layoutResId);
@@ -85,7 +87,7 @@ public abstract class CircleBaseViewHolder extends BaseRecyclerViewHolder<Tweet>
         commentImage = (ImageView) findView(commentImage, R.id.menu_img);
         menuButton = (FrameLayout) findView(menuButton, R.id.menu_button);
         commentAndPraiseLayout = (LinearLayout) findView(commentAndPraiseLayout, R.id.comment_praise_layout);
-        praiseWidget = (PraiseWidget) findView(praiseWidget, R.id.praise);
+        //praiseWidget = (PraiseWidget) findView(praiseWidget, R.id.praise);
         line = findView(line, R.id.divider);
         commentLayout = (LinearLayout) findView(commentLayout, R.id.comment_layout);
         //content
@@ -97,6 +99,7 @@ public abstract class CircleBaseViewHolder extends BaseRecyclerViewHolder<Tweet>
         }
         if (deleteCommentPopup == null) {
             deleteCommentPopup = new DeleteCommentPopup((Activity) getContext());
+            deleteCommentPopup.setOnDeleteCommentClickListener(onDeleteCommentClickListener);
         }
         deleteRelease.setText("删除");
 
@@ -119,12 +122,12 @@ public abstract class CircleBaseViewHolder extends BaseRecyclerViewHolder<Tweet>
         //点击事件
         menuButton.setOnClickListener(onMenuButtonClickListener);
         menuButton.setTag(R.id.momentinfo_data_tag_id, data);
-        //if (userID == momentsInfo.getUserID()) {
-        //    deleteRelease.setOnClickListener(deleteClick);
-        //    deleteRelease.setVisibility(View.VISIBLE);
-        //} else {
-        //    deleteRelease.setVisibility(View.INVISIBLE);
-        //}
+        if (mEventListener.isMyContent(data.getSender().getNick())) {
+            deleteRelease.setOnClickListener(deleteClick);
+            deleteRelease.setVisibility(View.VISIBLE);
+        } else {
+            deleteRelease.setVisibility(View.INVISIBLE);
+        }
         //传递到子类
         onBindDataToView(data, position, getViewType());
     }
@@ -141,12 +144,7 @@ public abstract class CircleBaseViewHolder extends BaseRecyclerViewHolder<Tweet>
         }
         boolean needCommentData = addComment(data.getComments());
         commentLayout.setVisibility(needCommentData ? View.VISIBLE : View.GONE);
-        //bottom
-        //createTime.setText(TimeUtil.getTimeString(Long.valueOf(data.getSdate())));
-        //boolean needPraiseData = addLikes(data.getLikeList());
-        //praiseWidget.setVisibility(needPraiseData ? View.VISIBLE : View.GONE);
-        //line.setVisibility(needPraiseData && needCommentData ? View.VISIBLE : View.GONE);
-        //commentAndPraiseLayout.setVisibility(needCommentData || needPraiseData ? View.VISIBLE : View.GONE);
+        createTime.setText("3分钟前");
     }
 
     private CommentPopup.OnCommentPopupClickListener onCommentPopupClickListener = new CommentPopup
@@ -158,6 +156,8 @@ public abstract class CircleBaseViewHolder extends BaseRecyclerViewHolder<Tweet>
 
         @Override
         public void onCommentClick(View v, @NonNull Tweet info) {
+            if (mEventListener != null)
+                mEventListener.toggleShowCommentBox(itemView, null, itemPosition, info, null);
         }
     };
     private int commentLeftAndPaddintRight = UIHelper.dipToPx(8f);
@@ -199,11 +199,24 @@ public abstract class CircleBaseViewHolder extends BaseRecyclerViewHolder<Tweet>
         for (int n = 0; n < commentList.size(); n++) {
             CommentWidget commentWidget = (CommentWidget) commentLayout.getChildAt(n);
             if (commentWidget != null)
-                commentWidget.setCommentText(commentList.get(n));
+                commentWidget.setCommentText(commentList.get(n), n);
         }
         return true;
     }
 
+    private View.OnClickListener deleteClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            mEventListener.deleteRelease(itemPosition);
+        }
+    };
+    private DeleteCommentPopup.OnDeleteCommentClickListener onDeleteCommentClickListener = new DeleteCommentPopup
+            .OnDeleteCommentClickListener() {
+        @Override
+        public void onDelClick(Comment commentInfo, int commentPosition) {
+            mEventListener.deleteComment(itemPosition, commentPosition);
+        }
+    };
     private View.OnLongClickListener onCommentLongClickListener = new View.OnLongClickListener() {
         @Override
         public boolean onLongClick(View v) {
@@ -218,7 +231,12 @@ public abstract class CircleBaseViewHolder extends BaseRecyclerViewHolder<Tweet>
             Comment commentInfo = ((CommentWidget) v).getData();
             if (commentInfo == null)
                 return;
-            deleteCommentPopup.showPopupWindow(commentInfo, ((CommentWidget) v).getCommentPosition());
+
+            if (mEventListener.isMyContent(commentInfo.getSender().getNick())) {
+                deleteCommentPopup.showPopupWindow(commentInfo, ((CommentWidget) v).getCommentPosition());
+            } else {
+                mEventListener.toggleShowCommentBox(null, (CommentWidget) v, itemPosition, null, commentInfo);
+            }
         }
     };
 
@@ -259,5 +277,9 @@ public abstract class CircleBaseViewHolder extends BaseRecyclerViewHolder<Tweet>
         return view;
     }
 
+
+    public void setEventListener(ViewListener eventListener) {
+        mEventListener = eventListener;
+    }
 
 }
