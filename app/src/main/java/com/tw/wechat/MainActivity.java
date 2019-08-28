@@ -79,12 +79,25 @@ public class MainActivity extends AppCompatActivity implements
                 public void onRefresh() {
                     isLoadMore = false;
                     ToastUtils.showToast(mContext, "onRefresh");
+                    circleRecyclerView.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            ToastUtils.showToast(mContext, "postDelayed");
+                            circleRecyclerView.complete();
+                        }
+                    }, 5000);
                 }
 
                 @Override
                 public void onLoadMore() {
                     isLoadMore = true;
                     ToastUtils.showToast(mContext, "onLoadMore");
+                    circleRecyclerView.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            circleRecyclerView.complete();
+                        }
+                    }, 5000);
                 }
             };
 
@@ -96,12 +109,12 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void getUserSuccess(User user) {
         hostViewHolder.loadHostData(user);
-        circleRecyclerView.compelete();
+        circleRecyclerView.complete();
     }
 
     @Override
     public void getTweetsSuccess(List<Tweet> tweets) {
-        circleRecyclerView.compelete();
+        circleRecyclerView.complete();
         if (isLoadMore) {
             adapter.addMore(tweets);
         } else {
@@ -111,6 +124,6 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void failed(String message) {
-        circleRecyclerView.compelete();
+        circleRecyclerView.complete();
     }
 }

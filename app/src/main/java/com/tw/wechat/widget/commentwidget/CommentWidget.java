@@ -74,9 +74,9 @@ public class CommentWidget extends TextView {
             mSpannableStringBuilderCompat.clearSpans();
         }
         String content = ": " + info.getContent() + "\0";
-        boolean isApply = (TextUtils.isEmpty(info.getSender().getUsername()));
-        // 用户B为空，证明是一条原创评论
-        if (isApply) {
+        //boolean isApply = (TextUtils.isEmpty(info.getSender().getUsername()));
+        //// 用户B为空，证明是一条原创评论
+        //if (isApply) {
             CommentClick userA = new CommentClick.Builder(getContext(), info)
                     .setColor(0xff517fae)
                     .setClickEventColor(0xffc6c6c6)
@@ -84,21 +84,8 @@ public class CommentWidget extends TextView {
                     .build();
             mSpannableStringBuilderCompat.append(info.getSender().getNick(), userA, 0);
             mSpannableStringBuilderCompat.append(content);
-        } else if (!isApply) {
-            //用户A，B不空，证明是回复评论
-            CommentClick userA = new CommentClick.Builder(getContext(), info).setColor(0xff517fae)
-                    .setClickEventColor(0xffc6c6c6)
-                    .setTextSize(textSize)
-                    .build();
-            mSpannableStringBuilderCompat.append(info.getSender().getNick(), userA, 0);
-            mSpannableStringBuilderCompat.append(" 回复 ");
-            CommentClick userB = new CommentClick.Builder(getContext(), info).setColor(0xff517fae)
-                    .setClickEventColor(0xffc6c6c6)
-                    .setTextSize(textSize)
-                    .build();
-            mSpannableStringBuilderCompat.append(info.getSender().getNick(), userB, 0);
-            mSpannableStringBuilderCompat.append(content);
-        }
+       
+            
         setText(mSpannableStringBuilderCompat);
     }
 
@@ -106,7 +93,7 @@ public class CommentWidget extends TextView {
         return (Comment) getTag();
     }
 
-    public int getCommentPositon() {
+    public int getCommentPosition() {
         return commentPositon;
     }
 }

@@ -27,6 +27,8 @@ import com.tw.wechat.widget.popup.DeleteCommentPopup;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
+
 
 /**
  * Created by 大灯泡 on 2016/11/1.
@@ -91,7 +93,7 @@ public abstract class CircleBaseViewHolder extends BaseRecyclerViewHolder<Tweet>
 
         if (commentPopup == null) {
             commentPopup = new CommentPopup((Activity) getContext());
-            //commentPopup.setOnCommentPopupClickListener(onCommentPopupClickListener);
+            commentPopup.setOnCommentPopupClickListener(onCommentPopupClickListener);
         }
         if (deleteCommentPopup == null) {
             deleteCommentPopup = new DeleteCommentPopup((Activity) getContext());
@@ -147,6 +149,17 @@ public abstract class CircleBaseViewHolder extends BaseRecyclerViewHolder<Tweet>
         //commentAndPraiseLayout.setVisibility(needCommentData || needPraiseData ? View.VISIBLE : View.GONE);
     }
 
+    private CommentPopup.OnCommentPopupClickListener onCommentPopupClickListener = new CommentPopup
+            .OnCommentPopupClickListener() {
+        @Override
+        public void onLikeClick(View v, @NonNull Tweet info, boolean hasLiked, Long friendPraiseID) {
+
+        }
+
+        @Override
+        public void onCommentClick(View v, @NonNull Tweet info) {
+        }
+    };
     private int commentLeftAndPaddintRight = UIHelper.dipToPx(8f);
     private int commentTopAndPaddintBottom = UIHelper.dipToPx(3f);
 
@@ -205,7 +218,7 @@ public abstract class CircleBaseViewHolder extends BaseRecyclerViewHolder<Tweet>
             Comment commentInfo = ((CommentWidget) v).getData();
             if (commentInfo == null)
                 return;
-            deleteCommentPopup.showPopupWindow(commentInfo, ((CommentWidget) v).getCommentPositon());
+            deleteCommentPopup.showPopupWindow(commentInfo, ((CommentWidget) v).getCommentPosition());
         }
     };
 

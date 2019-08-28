@@ -24,6 +24,7 @@ import android.widget.ImageView;
 
 import com.tw.wechat.R;
 import com.tw.wechat.utils.AnimUtils;
+import com.tw.wechat.utils.LogUtil;
 import com.tw.wechat.utils.UIHelper;
 import com.tw.wechat.utils.ViewOffsetHelper;
 import com.tw.wechat.widget.pullryc.wrapperadapter.FixedViewInfo;
@@ -184,8 +185,7 @@ public class CircleRecyclerView extends FrameLayout {
         this.currentStatus = status;
     }
 
-    public void compelete() {
-        Log.i(TAG, "compelete");
+    public void complete() {
         if (pullMode == Mode.FROM_START && iconObserver != null) {
             iconObserver.catchResetEvent();
         }
@@ -200,7 +200,7 @@ public class CircleRecyclerView extends FrameLayout {
             return;
         pullMode = Mode.FROM_START;
         setCurrentStatus(Status.REFRESHING);
-        iconObserver.autoRefresh();
+        //iconObserver.autoRefresh();
         onRefreshListener.onRefresh();
     }
 
@@ -298,6 +298,7 @@ public class CircleRecyclerView extends FrameLayout {
                 } else if (offset < 0) {
                     //底部的overscroll
                 }
+                LogUtil.e("offset", offset + "");
             }
         });
     }
@@ -344,12 +345,17 @@ public class CircleRecyclerView extends FrameLayout {
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             super.onScrolled(recyclerView, dx, dy);
+            LogUtil.e("recyclerView", "dx-" + dx + ": dy-" + dy);
             if (isScrollToBottom() && currentStatus != Status.REFRESHING) {
                 footerView.onRefreshing();
                 pullMode = Mode.FROM_BOTTOM;
                 Log.i("loadmoretag", "loadmore");
                 setCurrentStatus(Status.REFRESHING);
                 onRefreshListener.onLoadMore();
+            }
+
+            if (dy > 0) {
+                iconObserver.catchPullEvent(dy);
             }
         }
     };
@@ -396,6 +402,7 @@ public class CircleRecyclerView extends FrameLayout {
          * 调整icon的位置界限
          */
         private void adjustRefreshIconPosition() {
+            LogUtil.e("refreshIcon.getY()", refreshIcon.getY()+"");
             if (refreshIcon.getY() < 0) {
                 refreshIcon.offsetTopAndBottom(Math.abs(refreshIcon.getTop()));
             } else if (refreshIcon.getY() > refreshPosition) {
