@@ -66,7 +66,7 @@ public enum ImageLoadManager {
         try {
             Glide.with(getImageContext(imageView))
                     .load(imgUrl)
-                    .apply(new RequestOptions().transform(new RoundedCorners(radius)))
+                    .apply(new RequestOptions()).transform(new GlideRoundTransform(getImageContext(imageView), radius))
                     .thumbnail(loadTransform(imageView.getContext(), thumbDrawable, radius))
                     .into(imageView);
         } catch (Exception e) {

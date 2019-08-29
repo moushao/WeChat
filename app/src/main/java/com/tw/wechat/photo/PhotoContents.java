@@ -1,5 +1,6 @@
 package com.tw.wechat.photo;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Matrix;
 import android.graphics.Rect;
@@ -13,7 +14,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 
+import com.luck.picture.lib.PictureSelector;
+import com.tw.wechat.R;
+import com.tw.wechat.TweetActivity;
+import com.tw.wechat.common.MyApplication;
 import com.tw.wechat.photo.observer.PhotoBaseDataObserver;
+import com.tw.wechat.utils.ToastUtils;
 
 import org.apmem.tools.layouts.FlowLayout;
 
@@ -392,6 +398,7 @@ public class PhotoContents extends FlowLayout {
             if (checkPositionValided(selectionPosition))
                 updateChildPressState(selectionPosition, false);
         }
+        //PictureSelector.create(new Activity()).themeStyle(R.style.picture_default_style).openExternalPreview(mSelectedPosition, mSelectedPosition);
     }
 
 

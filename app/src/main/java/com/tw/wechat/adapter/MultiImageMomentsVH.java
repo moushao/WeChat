@@ -1,6 +1,5 @@
 package com.tw.wechat.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +11,12 @@ import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.tw.wechat.R;
+import com.tw.wechat.common.MyApplication;
 import com.tw.wechat.entity.Photo;
 import com.tw.wechat.entity.Tweet;
 import com.tw.wechat.photo.PhotoContents;
 import com.tw.wechat.photo.PhotoContentsBaseAdapter;
+import com.tw.wechat.utils.ToastUtils;
 import com.tw.wechat.widget.ForceClickImageView;
 
 import java.util.ArrayList;
@@ -49,6 +50,7 @@ public class MultiImageMomentsVH extends CircleBaseViewHolder implements PhotoCo
 
     @Override
     public void onBindDataToView(@NonNull Tweet data, int position, int viewType) {
+        
         if (adapter == null) {
             adapter = new InnerContainerAdapter(getContext(), data.getImages());
             imageContainer.setAdapter(adapter);
@@ -60,16 +62,7 @@ public class MultiImageMomentsVH extends CircleBaseViewHolder implements PhotoCo
 
     @Override
     public void onItemClick(ImageView imageView, int position) {
-        //        ToastUtils.showToast(getContext(), i + "");
-        // 预览图片 可自定长按保存路径
-        //        PictureSelector.create((CircleActivity)mContext).externalPicturePreview(position, "/custom_file", selectList);
-        //PhotoBrowseInfo info = PhotoBrowseInfo.create(adapter.datas, imageContainer.getContentViewsDrawableRects(),i);
-        // ActivityLauncher.startToPhotoBrosweActivity((Activity) getContext(), info);
-        //List<LocalMedia> medias = new ArrayList<>();
-        //for (String url : adapter.datas) {
-        //    medias.add(new LocalMedia(url, 0, 0, ""));
-        //}
-        //PictureSelector.create((Activity) mContext).externalPicturePreview(position, medias);
+        mEventListener.preViewPicture(mTweet.getImages(),position);
     }
 
 
@@ -102,7 +95,6 @@ public class MultiImageMomentsVH extends CircleBaseViewHolder implements PhotoCo
 
         @Override
         public void onBindData(int position, @NonNull ImageView convertView) {
-            //ImageLoadMnanger.INSTANCE.loadImage(convertView, datas.get(position));
             Glide.with(context).load(datas.get(position).getUrl()).apply(options).into(convertView);
         }
 

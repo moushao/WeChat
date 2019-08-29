@@ -63,7 +63,6 @@ public class ClickShowMoreLayout extends LinearLayout implements View.OnClickLis
         if (TextUtils.isEmpty(clickText))
             clickText = "全文";
         a.recycle();
-
         initView(context);
 
     }

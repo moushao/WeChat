@@ -1,14 +1,18 @@
 package com.tw.wechat;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.luck.picture.lib.PictureSelector;
+import com.luck.picture.lib.entity.LocalMedia;
 import com.tw.wechat.adapter.CircleMomentsAdapter;
 import com.tw.wechat.adapter.HostViewHolder;
 import com.tw.wechat.adapter.MultiImageMomentsVH;
 import com.tw.wechat.entity.Comment;
+import com.tw.wechat.entity.Photo;
 import com.tw.wechat.entity.Tweet;
 import com.tw.wechat.entity.User;
 import com.tw.wechat.event.CallBack;
@@ -23,11 +27,12 @@ import com.tw.wechat.widget.commentwidget.CommentWidget;
 import com.tw.wechat.widget.commentwidget.KeyboardControlMnanager;
 import com.tw.wechat.widget.pullryc.CircleRecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class MainActivity extends AppCompatActivity implements CircleRecyclerView.OnPreDispatchTouchListener, CallBack {
+public class TweetActivity extends AppCompatActivity implements CircleRecyclerView.OnPreDispatchTouchListener {
     CircleRecyclerView circleRecyclerView;
     private HostViewHolder hostViewHolder;
     private Context mContext;
@@ -36,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements CircleRecyclerVie
     private CommentBox commentBox;
     private CircleViewHelper mViewHelper;
     private User user;
+    private int offset;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +51,9 @@ public class MainActivity extends AppCompatActivity implements CircleRecyclerVie
         commentBox = findViewById(R.id.widget_comment);
         mContext = this;
         initWidget();
-        MainModel mainModel = new MainModel();
-        mainModel.getUser(this);
-        mainModel.getTweets(this);
+        MainModel.getInstance().getUser(callBack);
+        MainModel.getInstance().getTweets(offset, callBack);
+        ToastUtils.showToast(this, Build.VERSION.SDK_INT + "");
     }
 
     private void initWidget() {
@@ -57,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements CircleRecyclerVie
         hostViewHolder = new HostViewHolder(this, new ItemListener() {
             @Override
             public void onItemClick(View view, int position, Object mData) {
-                ToastUtils.showToast(mContext, "头像部分被点击了");
+                ToastUtils.showToast(mContext, "照片墙被点击了");
             }
         });
 
@@ -81,12 +87,17 @@ public class MainActivity extends AppCompatActivity implements CircleRecyclerVie
             new OnRefreshListener2() {
                 @Override
                 public void onRefresh() {
+                    ToastUtils.showToast(mContext, "刷新了Tweet列表");
+                    offset = 0;
                     isLoadMore = false;
+                    MainModel.getInstance().getTweets(offset, callBack);
                 }
 
                 @Override
                 public void onLoadMore() {
+                    offset++;
                     isLoadMore = true;
+                    MainModel.getInstance().getTweets(offset, callBack);
                 }
             };
 
@@ -129,6 +140,23 @@ public class MainActivity extends AppCompatActivity implements CircleRecyclerVie
             adapter.getDatas().remove(itemPosition);
             adapter.notifyItemChanged(itemPosition);
         }
+
+        @Override
+        public void preViewPicture(List<Photo> images, int position) {
+            if (Build.VERSION.SDK_INT > 16) {
+                ToastUtils.showToast(mContext, "十分抱歉,由于机子型号太小,无法预览图片");
+                return;
+            }
+            
+            List<LocalMedia> medias = new ArrayList<>();
+            for (int i = 0; i < images.size(); i++) {
+                LocalMedia media = new LocalMedia();
+                media.position = i;
+                media.setPath(images.get(i).getUrl());
+                medias.add(media);
+            }
+            PictureSelector.create(TweetActivity.this).themeStyle(R.style.picture_default_style).openExternalPreview(position, medias);
+        }
     };
 
     private CommentBox.OnCommentSendClickListener onCommentSendClickListener = new CommentBox
@@ -159,32 +187,39 @@ public class MainActivity extends AppCompatActivity implements CircleRecyclerVie
                 } else {
                     //定位到底部
                     commentBox.dismissCommentBox(false);
-                    mViewHelper.alignCommentBoxToViewWhenDismiss(circleRecyclerView, commentBox, commentType,
-                            anchorView);
+                    mViewHelper.alignCommentBoxToViewWhenDismiss(
+                            circleRecyclerView, commentBox, commentType, anchorView);
                 }
             }
         });
     }
 
-    @Override
-    public void getUserSuccess(User user) {
-        this.user = user;
-        hostViewHolder.loadHostData(user);
-        circleRecyclerView.complete();
-    }
-
-    @Override
-    public void getTweetsSuccess(List<Tweet> tweets) {
-        circleRecyclerView.complete();
-        if (isLoadMore) {
-            adapter.addMore(tweets);
-        } else {
-            adapter.updateData(tweets);
+    private CallBack callBack = new CallBack() {
+        @Override
+        public void getUserSuccess(User data) {
+            user = data;
+            hostViewHolder.loadHostData(user);
+            circleRecyclerView.complete();
         }
-    }
 
-    @Override
-    public void failed(String message) {
-        circleRecyclerView.complete();
-    }
+        @Override
+        public void getTweetsSuccess(List<Tweet> tweets) {
+            circleRecyclerView.complete();
+            if (tweets.size() == 0)
+                ToastUtils.showToast(mContext, "没有更多Tweet了");
+            if (isLoadMore) {
+                adapter.addMore(tweets);
+                circleRecyclerView.complete();
+            } else {
+                adapter.updateData(tweets);
+            }
+        }
+
+        @Override
+        public void failed(String message) {
+            circleRecyclerView.complete();
+        }
+    };
+
+
 }

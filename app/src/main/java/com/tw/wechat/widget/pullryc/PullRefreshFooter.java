@@ -3,6 +3,7 @@ package com.tw.wechat.widget.pullryc;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
@@ -53,8 +54,17 @@ public class PullRefreshFooter extends FrameLayout {
     }
 
     public void onFinish() {
-        setVisibility(GONE);
-        loadingView.clearAnimation();
+        //loadingView.postDelayed(new Runnable() {
+        //    @Override
+        //    public void run() {
+                Animation animation = new AlphaAnimation(1F, 0F);
+                animation.setDuration(400);
+                startAnimation(animation);
+                setVisibility(GONE);
+                loadingView.clearAnimation();
+        //    }
+        //}, 500);
+
     }
 
 

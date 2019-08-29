@@ -66,8 +66,8 @@ public abstract class CircleBaseViewHolder extends BaseRecyclerViewHolder<Tweet>
     private DeleteCommentPopup deleteCommentPopup;
 
     private int itemPosition; //当条朋友圈的位置
-    private Tweet momentsInfo;
-    private ViewListener mEventListener;
+    protected Tweet mTweet;
+    protected ViewListener mEventListener;
 
     public CircleBaseViewHolder(Context context, ViewGroup viewGroup, int layoutResId) {
         super(context, viewGroup, layoutResId);
@@ -109,7 +109,7 @@ public abstract class CircleBaseViewHolder extends BaseRecyclerViewHolder<Tweet>
 
     @Override
     public void onBindData(Tweet data, int position) {
-        this.momentsInfo = data;
+        this.mTweet = data;
         this.itemPosition = position;
         //通用数据绑定
         onBindMutualDataToViews(data);
@@ -130,11 +130,9 @@ public abstract class CircleBaseViewHolder extends BaseRecyclerViewHolder<Tweet>
         //header
         ImageLoadManager.INSTANCE.loadImageWithRadius(avatar, data.getSender().getAvatar(), R.mipmap.ic_launcher, 20);
 
-        nick.setText(data.getSender().getNick() + ":" + data.position);
-        if (itemPosition == 14) {
-            LogUtil.e("Tweet", data.getContent());
-        }
+        nick.setText(data.getSender().getNick() + ":" + data.prePosition);
         if (TextUtils.isEmpty(data.getContent())) {
+            userText.setText("", itemPosition);
             userText.setVisibility(View.GONE);
         } else {
             if (!userText.getText().toString().equals(data.getContent()))

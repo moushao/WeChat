@@ -192,6 +192,7 @@ public class CircleRecyclerView extends FrameLayout {
             footerView.onFinish();
         }
         setCurrentStatus(Status.DEFAULT);
+        LogUtil.e("pullMode", pullMode == Mode.FROM_START ? "FROM_START" : "FROM_BOTTOM");
     }
 
     public void autoRefresh() {
@@ -267,7 +268,7 @@ public class CircleRecyclerView extends FrameLayout {
                     case STATE_BOUNCE_BACK:
                         if (oldState == STATE_DRAG_START_SIDE) {
                             // Dragging stopped -- view is starting to bounce back from the *left-end* onto natural 
-                            // position.
+                            // prePosition.
                         } else { // i.e. (oldState == STATE_DRAG_END_SIDE)
                             // View is starting to bounce back from the *right-end*.
                         }
@@ -297,7 +298,6 @@ public class CircleRecyclerView extends FrameLayout {
                 } else if (offset < 0) {
                     //底部的overscroll
                 }
-                LogUtil.e("offset", offset + "");
             }
         });
     }
@@ -402,7 +402,6 @@ public class CircleRecyclerView extends FrameLayout {
          * 调整icon的位置界限
          */
         private void adjustRefreshIconPosition() {
-            LogUtil.e("refreshIcon.getY()", refreshIcon.getY() + "");
             if (refreshIcon.getY() < 0) {
                 refreshIcon.offsetTopAndBottom(Math.abs(refreshIcon.getTop()));
             } else if (refreshIcon.getY() > refreshPosition) {

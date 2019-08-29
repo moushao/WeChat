@@ -4,10 +4,8 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.text.TextPaint;
 import android.view.View;
-import android.widget.Toast;
 
 import com.tw.wechat.entity.Comment;
-import com.tw.wechat.entity.Sender;
 import com.tw.wechat.utils.DimenUtil;
 import com.tw.wechat.widget.ClickableSpanEx;
 

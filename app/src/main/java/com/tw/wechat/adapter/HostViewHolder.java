@@ -53,7 +53,7 @@ public class HostViewHolder {
             return;
 
         ImageLoadManager.INSTANCE.loadImageWithRadius(friend_avatar, user.getAvatar(), R.mipmap.ic_launcher, 20);
-        ImageLoadManager.INSTANCE.loadImage(friend_wall_pic, user.getProfile(), R.mipmap.ic_launcher, R.drawable.pic_faith);
+        ImageLoadManager.INSTANCE.loadImage(friend_wall_pic, user.getProfileImage(), R.mipmap.ic_launcher, R.drawable.pic_faith);
         hostid.setText(user.getNick());
     }
 

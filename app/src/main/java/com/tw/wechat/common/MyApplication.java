@@ -3,6 +3,7 @@ package com.tw.wechat.common;
 import android.app.Application;
 import android.app.NotificationManager;
 
+import com.tw.wechat.dao.DaoManager;
 import com.tw.wechat.utils.CrashHandler;
 
 /**
@@ -19,6 +20,7 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         mMyApplication = this;
+        DaoManager.initDao(this);
         CrashHandler.getInstance().init(this);
     }
 

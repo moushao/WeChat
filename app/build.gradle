@@ -1,15 +1,20 @@
 apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao'
 
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.1"
     defaultConfig {
         applicationId "com.tw.wechat"
-        minSdkVersion 16
+        minSdkVersion 14
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     buildTypes {
         release {
@@ -17,6 +22,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    greendao {
+        schemaVersion 1
+        daoPackage 'com.tw.wechat.dao'
+        targetGenDir 'src/main/java'
+    }
+//    lintOptions {
+//        checkReleaseBuilds false
+//        abortOnError false
+//    }
 }
 
 dependencies {
@@ -37,6 +51,8 @@ dependencies {
     implementation rootProject.ext.dependencies["rxjava2"]
     //recyclerview
     implementation rootProject.ext.dependencies["recyclerview-v7"]
+    //数据库
+    implementation rootProject.ext.dependencies["greendao"]
 
     implementation 'me.everything:overscroll-decor-android:1.0.3'
     //VLayout
@@ -49,4 +65,8 @@ dependencies {
 
     implementation 'org.apmem.tools:layouts:1.10@aar'
     implementation 'com.github.razerdp:BasePopup:2.2.1'
+//    implementation 'com.facebook.stetho:stetho-okhttp3:1.5.1'
+    implementation 'com.facebook.stetho:stetho:1.5.1'
+    implementation 'com.facebook.stetho:stetho-urlconnection:1.5.1'
+    implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.4'
 }
