@@ -27,7 +27,7 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
 
     private static final String TAG = "BaseRecyclerViewAdapter";
     protected Context context;
-    protected List<T> datas;
+    protected List<T> mData;
     protected LayoutInflater mInflater;
 
     private OnRecyclerViewItemClickListener<T> onRecyclerViewItemClickListener;
@@ -35,18 +35,18 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
 
     public BaseRecyclerViewAdapter(@NonNull Context context, @NonNull List<T> datas) {
         this.context = context;
-        this.datas = datas;
+        this.mData = datas;
         if (datas != null) {
-            this.datas = new ArrayList<>(datas);
+            this.mData = new ArrayList<>(datas);
         } else {
-            this.datas = new ArrayList<>();
+            this.mData = new ArrayList<>();
         }
         mInflater = LayoutInflater.from(context);
     }
 
     @Override
     public int getItemViewType(int position) {
-        return getViewType(position, datas.get(position));
+        return getViewType(position, mData.get(position));
     }
 
     @Override
@@ -64,7 +64,7 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
 
     @Override
     public void onBindViewHolder(BaseRecyclerViewHolder holder, int position) {
-        T data = datas.get(position);
+        T data = mData.get(position);
         holder.itemView.setTag(R.id.recycler_view_tag, data);
         holder.onBindData(data, position);
         onBindData(holder, data, position);
@@ -77,17 +77,16 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
                 public void onClick(View v) {
                     //这个获取位置的方法，防止添加删除导致位置不变
                     int layoutPosition = holder.getAdapterPosition();
-                    onRecyclerViewItemClickListener.onItemClick(holder.itemView, layoutPosition, datas.get(layoutPosition));
+                    onRecyclerViewItemClickListener.onItemClick(holder.itemView, layoutPosition, mData.get(layoutPosition));
                 }
             });
         }
         if (onRecyclerViewLongItemClickListener != null) {
-            //longclick
             holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
                     int layoutPosition = holder.getAdapterPosition();
-                    onRecyclerViewLongItemClickListener.onItemLongClick(holder.itemView, layoutPosition, datas.get(layoutPosition));
+                    onRecyclerViewLongItemClickListener.onItemLongClick(holder.itemView, layoutPosition, mData.get(layoutPosition));
                     return false;
                 }
             });
@@ -96,57 +95,56 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
 
     @Override
     public int getItemCount() {
-        return datas == null ? 0 : datas.size();
+        return mData == null ? 0 : mData.size();
     }
 
     public void updateData(List<T> datas) {
-        if (this.datas != null) {
-            this.datas.clear();
-            this.datas.addAll(datas);
+        if (this.mData != null) {
+            this.mData.clear();
+            this.mData.addAll(datas);
         } else {
-            this.datas = datas;
+            this.mData = datas;
         }
         notifyDataSetChanged();
     }
 
     public void addMore(List<T> datas) {
         if (datas != null && datas.size() > 0) {
-            this.datas.addAll(datas);
+            this.mData.addAll(datas);
             notifyDataSetChanged();
         }
     }
 
-    public List<T> getDatas() {
-        return datas;
+    public List<T> getData() {
+        return mData;
     }
 
     public void addData(int pos, @NonNull T data) {
-        if (datas != null) {
-            datas.add(pos, data);
+        if (mData != null) {
+            mData.add(pos, data);
             notifyItemInserted(pos);
         }
     }
 
     public void addData(@NonNull T data) {
-        if (datas != null) {
-            datas.add(data);
-            notifyItemInserted(datas.size() - 1);
+        if (mData != null) {
+            mData.add(data);
+            notifyItemInserted(mData.size() - 1);
         }
     }
 
     public void deleteData(int pos) {
-        if (datas != null && datas.size() > pos) {
-            datas.remove(pos);
+        if (mData != null && mData.size() > pos) {
+            mData.remove(pos);
             notifyItemRemoved(pos);
         }
     }
 
     public T findData(int pos) {
-        if (pos < 0 || pos > datas.size()) {
-            Log.e(TAG, "这个position他喵咪的太强大了，我hold不住");
+        if (pos < 0 || pos > mData.size()) {
             return null;
         }
-        return datas.get(pos);
+        return mData.get(pos);
     }
 
     protected abstract int getViewType(int position, @NonNull T data);

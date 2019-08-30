@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.jaeger.library.StatusBarUtil;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.tw.wechat.adapter.CircleMomentsAdapter;
@@ -19,7 +20,7 @@ import com.tw.wechat.event.CallBack;
 import com.tw.wechat.event.ItemListener;
 import com.tw.wechat.event.OnRefreshListener2;
 import com.tw.wechat.event.ViewListener;
-import com.tw.wechat.model.MainModel;
+import com.tw.wechat.model.TweetController;
 import com.tw.wechat.utils.ToastUtils;
 import com.tw.wechat.widget.CircleViewHelper;
 import com.tw.wechat.widget.commentwidget.CommentBox;
@@ -47,12 +48,13 @@ public class TweetActivity extends AppCompatActivity implements CircleRecyclerVi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        StatusBarUtil.setTranslucentForImageView(this, 0, null);
         circleRecyclerView = findViewById(R.id.recycler);
         commentBox = findViewById(R.id.widget_comment);
         mContext = this;
         initWidget();
-        MainModel.getInstance().getUser(callBack);
-        MainModel.getInstance().getTweets(offset, callBack);
+        TweetController.getInstance().getUser(callBack);
+        TweetController.getInstance().getTweets(offset, callBack);
         ToastUtils.showToast(this, Build.VERSION.SDK_INT + "");
     }
 
@@ -87,17 +89,18 @@ public class TweetActivity extends AppCompatActivity implements CircleRecyclerVi
             new OnRefreshListener2() {
                 @Override
                 public void onRefresh() {
+                    TweetController.getInstance().getUser(callBack);
                     ToastUtils.showToast(mContext, "刷新了Tweet列表");
                     offset = 0;
                     isLoadMore = false;
-                    MainModel.getInstance().getTweets(offset, callBack);
+                    TweetController.getInstance().getTweets(offset, callBack);
                 }
 
                 @Override
                 public void onLoadMore() {
                     offset++;
                     isLoadMore = true;
-                    MainModel.getInstance().getTweets(offset, callBack);
+                    TweetController.getInstance().getTweets(offset, callBack);
                 }
             };
 
@@ -131,23 +134,23 @@ public class TweetActivity extends AppCompatActivity implements CircleRecyclerVi
 
         @Override
         public void deleteComment(int itemPosition, int commentPosition) {
-            adapter.getDatas().get(itemPosition).getComments().remove(commentPosition);
+            adapter.getData().get(itemPosition).getComments().remove(commentPosition);
             adapter.notifyItemChanged(itemPosition);
         }
 
         @Override
         public void deleteRelease(int itemPosition) {
-            adapter.getDatas().remove(itemPosition);
+            adapter.getData().remove(itemPosition);
             adapter.notifyItemChanged(itemPosition);
         }
 
         @Override
         public void preViewPicture(List<Photo> images, int position) {
-            if (Build.VERSION.SDK_INT > 16) {
+            if (Build.VERSION.SDK_INT < 16) {
                 ToastUtils.showToast(mContext, "十分抱歉,由于机子型号太小,无法预览图片");
                 return;
             }
-            
+
             List<LocalMedia> medias = new ArrayList<>();
             for (int i = 0; i < images.size(); i++) {
                 LocalMedia media = new LocalMedia();
@@ -165,7 +168,7 @@ public class TweetActivity extends AppCompatActivity implements CircleRecyclerVi
         public void onCommentSendClick(Comment commentInfo, String commentContent) {
             Comment comment = new Comment(user, commentContent);
             int itemPos = mViewHelper.getCommentItemDataPosition();
-            adapter.getDatas().get(itemPos).getComments().add(comment);
+            adapter.getData().get(itemPos).getComments().add(comment);
             adapter.notifyItemChanged(itemPos);
             commentBox.clearDraft();
             commentBox.dismissCommentBox(true);

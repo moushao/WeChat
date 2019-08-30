@@ -19,8 +19,8 @@
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:gravity="center_vertical"
-            android:textColor="@color/item_bottom_text"
-            android:textSize="@dimen/small_font"
+            android:textColor="@color/color_item_bottom_text"
+            android:textSize="@dimen/item_time"
             tools:text="3小时前"/>
 
         <TextView
@@ -30,8 +30,8 @@
             android:layout_marginLeft="15dp"
             android:layout_toRightOf="@id/create_time"
             android:gravity="center_vertical"
-            android:textColor="@color/nick"
-            android:textSize="@dimen/small_font"
+            android:textColor="@color/color_nick"
+            android:textSize="@dimen/item_time"
             tools:text="删除"/>
 
         <FrameLayout
@@ -45,7 +45,7 @@
                 android:layout_width="25dp"
                 android:layout_height="15dp"
                 android:layout_gravity="center_vertical|right"
-                android:src="@drawable/bg_comment_pressed"/>
+                android:src="@drawable/icon_comment_pop_pres"/>
         </FrameLayout>
     </RelativeLayout>
 
@@ -57,7 +57,7 @@
         android:layout_below="@id/menu_layout"
         android:layout_marginLeft="74dp"
         android:layout_marginRight="@dimen/item_padding"
-        android:background="@drawable/comment_praise"
+        android:background="@drawable/pic_comment_praise"
         android:orientation="vertical"
         >
 
@@ -81,7 +81,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
-            android:background="@color/line_bg"
+            android:background="@color/color_line_bg"
             />
 
         <LinearLayout

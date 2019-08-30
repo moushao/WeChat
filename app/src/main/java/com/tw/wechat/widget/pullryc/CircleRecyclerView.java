@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 
-import com.tw.wechat.adapter.CircleBaseViewHolder;
 import com.tw.wechat.event.OnRefreshListener2;
 
 import android.util.AttributeSet;
@@ -154,7 +153,7 @@ public class CircleRecyclerView extends FrameLayout {
         if (refreshIcon == null) {
             refreshIcon = new ImageView(context);
             refreshIcon.setBackgroundColor(Color.TRANSPARENT);
-            refreshIcon.setImageResource(R.drawable.rotate_icon);
+            refreshIcon.setImageResource(R.drawable.icon_rotate);
             refreshIcon.setVisibility(GONE);
         }
         LayoutParams iconParam = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams

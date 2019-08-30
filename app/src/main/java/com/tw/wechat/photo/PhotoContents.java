@@ -1,10 +1,12 @@
 package com.tw.wechat.photo;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Matrix;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.util.SparseArray;
 import android.view.MotionEvent;
@@ -73,11 +75,13 @@ public class PhotoContents extends FlowLayout {
         init(context);
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private void init(Context context) {
         itemMargin = dp2Px(4f);
         recycler = new InnerRecyclerHelper();
         setOrientation(HORIZONTAL);
         setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+        setBackground(getResources().getDrawable(R.drawable.selector_photo_content));
     }
 
 

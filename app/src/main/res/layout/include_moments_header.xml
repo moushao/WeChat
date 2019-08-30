@@ -13,7 +13,7 @@
         android:id="@+id/avatar"
         android:layout_width="@dimen/item_avatar"
         android:layout_height="@dimen/item_avatar"
-        tools:src="@drawable/login_head"/>
+        tools:src="@drawable/pic_default_head"/>
 
     <TextView
         android:id="@+id/nick"
@@ -22,7 +22,7 @@
         android:layout_alignTop="@id/avatar"
         android:layout_marginLeft="10dp"
         android:layout_toRightOf="@id/avatar"
-        android:textColor="@color/nick"
+        android:textColor="@color/color_nick"
         android:textSize="14sp"
         android:textStyle="bold"
         tools:text="羽翼君"/>
@@ -35,5 +35,5 @@
         android:layout_below="@id/nick"
         android:layout_marginTop="8dp"
         app:show_line="5"
-        app:text_color="@color/normal_font_color"/>
+        app:text_color="@color/color_normal_font"/>
 </RelativeLayout>

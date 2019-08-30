@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
@@ -53,7 +52,7 @@ public class HostViewHolder {
             return;
 
         ImageLoadManager.INSTANCE.loadImageWithRadius(friend_avatar, user.getAvatar(), R.mipmap.ic_launcher, 20);
-        ImageLoadManager.INSTANCE.loadImage(friend_wall_pic, user.getProfileImage(), R.mipmap.ic_launcher, R.drawable.pic_faith);
+        ImageLoadManager.INSTANCE.loadImage(friend_wall_pic, user.getProfileImage(), R.mipmap.ic_launcher, R.drawable.pic_default_wall_pic);
         hostid.setText(user.getNick());
     }
 

@@ -7,5 +7,5 @@
     <item
         android:state_enabled="true"
         android:state_pressed="true"
-        android:drawable="@color/delete_click_bg"/>
+        android:drawable="@color/color_delete_click_bg"/>
 </selector>

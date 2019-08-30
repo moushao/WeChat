@@ -38,8 +38,6 @@ public class User {
     /**
      * 人员类型
      * 1:我自己
-     * 2:tweet发送人
-     * 3:comment发送人
      */
     private int type;
 
@@ -50,7 +48,7 @@ public class User {
 
     @Generated(hash = 145582840)
     public User(Long Id, String username, String nick, String avatar,
-            String profileImage, int type) {
+                String profileImage, int type) {
         this.Id = Id;
         this.username = username;
         this.nick = nick;

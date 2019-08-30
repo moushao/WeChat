@@ -19,7 +19,6 @@ import com.tw.wechat.entity.User;
 import com.tw.wechat.event.ViewListener;
 import com.tw.wechat.photo.SimpleObjectPool;
 import com.tw.wechat.utils.ImageLoadManager;
-import com.tw.wechat.utils.LogUtil;
 import com.tw.wechat.utils.UIHelper;
 import com.tw.wechat.widget.ClickShowMoreLayout;
 import com.tw.wechat.widget.commentwidget.CommentWidget;
@@ -115,7 +114,7 @@ public abstract class CircleBaseViewHolder extends BaseRecyclerViewHolder<Tweet>
         onBindMutualDataToViews(data);
         //点击事件
         menuButton.setOnClickListener(onMenuButtonClickListener);
-        menuButton.setTag(R.id.momentinfo_data_tag_id, data);
+        menuButton.setTag(R.id.moment_data_tag_id, data);
         if (mEventListener.isMyContent(data.getSender().getNick())) {
             deleteRelease.setOnClickListener(deleteClick);
             deleteRelease.setVisibility(View.VISIBLE);
@@ -183,7 +182,7 @@ public abstract class CircleBaseViewHolder extends BaseRecyclerViewHolder<Tweet>
                     commentWidget.setLineSpacing(4, 1);
                 }
                 commentWidget.setBackgroundDrawable(getContext().getResources().getDrawable(R.drawable
-                        .common_selector));
+                        .selector_bg_comment));
                 commentWidget.setOnClickListener(onCommentWidgetClickListener);
                 commentWidget.setOnLongClickListener(onCommentLongClickListener);
                 commentLayout.addView(commentWidget);
@@ -253,7 +252,7 @@ public abstract class CircleBaseViewHolder extends BaseRecyclerViewHolder<Tweet>
     private View.OnClickListener onMenuButtonClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Tweet info = (Tweet) v.getTag(R.id.momentinfo_data_tag_id);
+            Tweet info = (Tweet) v.getTag(R.id.moment_data_tag_id);
             if (info != null) {
                 commentPopup.updateMomentInfo(info);
                 commentPopup.showPopupWindow(commentImage);

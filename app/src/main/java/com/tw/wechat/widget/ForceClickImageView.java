@@ -45,7 +45,7 @@ public class ForceClickImageView extends ImageView {
         final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ForceClickImageView);
         mForegroundDrawable = a.getDrawable(R.styleable.ForceClickImageView_foregroundColor);
         if (mForegroundDrawable instanceof ColorDrawable || (attrs == null && needDefaultForceGroundColor)) {
-            int foreGroundColor = a.getColor(R.styleable.ForceClickImageView_foregroundColor, 0x882b2b2b);
+            int foreGroundColor = a.getColor(R.styleable.ForceClickImageView_foregroundColor, 0x00000000);
             mForegroundDrawable = new StateListDrawable();
             ColorDrawable forceDrawable = new ColorDrawable(foreGroundColor);
             ColorDrawable normalDrawable = new ColorDrawable(Color.TRANSPARENT);
@@ -75,9 +75,9 @@ public class ForceClickImageView extends ImageView {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if (mForegroundDrawable != null) {
-            if (getDrawable()!=null) {
+            if (getDrawable() != null) {
                 mForegroundDrawable.setBounds(getDrawable().getBounds());
-            }else {
+            } else {
                 mForegroundDrawable.setBounds(mCachedBounds);
             }
             mForegroundDrawable.draw(canvas);
@@ -87,7 +87,8 @@ public class ForceClickImageView extends ImageView {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        if (mForegroundDrawable != null) mCachedBounds.set(0, 0, w, h);
+        if (mForegroundDrawable != null)
+            mCachedBounds.set(0, 0, w, h);
     }
 
 }

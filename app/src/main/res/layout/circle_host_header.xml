@@ -43,7 +43,7 @@
         android:layout_below="@id/friend_avatar"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
-        android:background="@drawable/message_bg"
+        android:background="@drawable/selector_bg_notice_message"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:visibility="invisible"
@@ -54,7 +54,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_centerVertical="true"
-            android:src="@drawable/login_head"
+            android:src="@drawable/pic_default_head"
             />
 
         <TextView

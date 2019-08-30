@@ -5,7 +5,7 @@
         android:state_enabled="false"
         android:state_pressed="false"/>
     <item
-        android:drawable="@color/comment_click_bg"
+        android:drawable="@color/color_comment_click_bg"
         android:state_enabled="true"
         android:state_pressed="true"/>
 </selector>

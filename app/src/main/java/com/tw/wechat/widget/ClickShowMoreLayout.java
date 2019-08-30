@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.SizeF;
 import android.util.SparseIntArray;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,9 +74,9 @@ public class ClickShowMoreLayout extends LinearLayout implements View.OnClickLis
         mTextView.setTextColor(textColor);
         mTextView.setMaxLines(showLine);
 
-        mClickToShow.setBackgroundDrawable(getResources().getDrawable(R.drawable.selector_tx_show_more));
+        mClickToShow.setBackgroundDrawable(getResources().getDrawable(R.drawable.selector_bg_comment_more_tx));
         mClickToShow.setTextSize(textSize);
-        mClickToShow.setTextColor(getResources().getColor(R.color.nick));
+        mClickToShow.setTextColor(getResources().getColor(R.color.color_nick));
         mClickToShow.setText(clickText);
 
         LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,

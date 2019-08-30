@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/popup_background">
+    android:background="@color/color_popup_background">
 
     <LinearLayout
         android:id="@+id/popup_container"
@@ -16,7 +16,7 @@
             android:id="@+id/delete"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@drawable/selector_popup"
+            android:background="@drawable/selector_bg_popup"
             android:gravity="center"
             android:text="删除"
             android:textColor="#E64340"
@@ -26,7 +26,7 @@
             android:id="@+id/cancel"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@drawable/selector_popup"
+            android:background="@drawable/selector_bg_popup"
             android:gravity="center"
             android:text="取消"
             android:textColor="#1A1A1A"

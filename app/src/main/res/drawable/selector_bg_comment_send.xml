@@ -3,13 +3,13 @@
     <item android:state_pressed="true">
         <shape android:shape="rectangle">
             <corners android:radius="3dp"/>
-            <solid android:color="@color/wechat_green_bg"/>
+            <solid android:color="@color/color_green_bg"/>
         </shape>
     </item>
     <item>
         <shape android:shape="rectangle">
             <corners android:radius="3dp"/>
-            <solid android:color="@color/wechat_green_bg"/>
+            <solid android:color="@color/color_green_bg"/>
         </shape>
     </item>
 
