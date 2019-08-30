@@ -23,11 +23,11 @@ import androidx.annotation.Nullable;
 
 
 /**
- * Created by 大灯泡 on 2016/11/1.
- * <p>
- * 图片加载
+ * 类名: {@link ImageLoadManager}
+ * <br/> 功能描述:图片加载辅助类
+ * <br/> 作者: MouShao
+ * <br/> 时间: 2019/8/30
  */
-
 public enum ImageLoadManager {
     INSTANCE;
     RoundedCorners mCorners = new RoundedCorners(30);
@@ -55,7 +55,6 @@ public enum ImageLoadManager {
             Glide.with(getImageContext(imageView))
                     .load(imgUrl)
                     .apply(options)
-                    //.thumbnail(loadTransform(imageView.getContext(), thumbDrawable, 0))
                     .into(imageView);
         } catch (Exception e) {
             e.printStackTrace();
@@ -72,24 +71,6 @@ public enum ImageLoadManager {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public void loadImage(Context context, ImageView imageView, String imgUrl) {
-        try {
-            Glide.with(context).load(imgUrl).apply(options).into(imageView);
-        } catch (Exception e) {
-
-        }
-    }
-
-    public void loadImage(ImageView imageView, int placeHolderColor, String imgUrl) {
-        Glide.with(getImageContext(imageView)).load(imgUrl).apply(options).into(imageView);
-
-    }
-
-    public void loadImageDontAnimate(ImageView imageView, String imgUrl) {
-        Glide.with(getImageContext(imageView)).load(imgUrl).apply(options).into(imageView);
-
     }
 
 

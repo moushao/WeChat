@@ -23,12 +23,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 /**
- * Created by 大灯泡 on 2016/12/8.
- * <p>
- * 评论输入框
+ * 类名: {@link CommentBox}
+ * <br/> 功能描述:评论输入框
+ * <br/> 作者: MouShao
+ * <br/> 时间: 2019/8/30
  */
-
-// FIXME: 2016/12/13 跟别的控件耦合度较高，后期考虑优化
 public class CommentBox extends FrameLayout {
 
     private EditText mInputContent;
@@ -83,8 +82,6 @@ public class CommentBox extends FrameLayout {
     }
 
     public void showCommentBox(@Nullable Comment commentInfo) {
-        //        if (TextUtils.isEmpty(statusID))
-        //            return;
         if (isShowing)
             return;
         this.isShowing = true;

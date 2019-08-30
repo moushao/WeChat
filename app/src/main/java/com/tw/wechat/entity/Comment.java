@@ -24,6 +24,7 @@ public class Comment {
     private Long senderID;
 
     @ToOne(joinProperty = "senderID")
+    @Keep
     private User sender;
 
     /** Used to resolve relations */
@@ -33,6 +34,9 @@ public class Comment {
     /** Used for active entity operations. */
     @Generated(hash = 1903578761)
     private transient CommentDao myDao;
+
+    @Generated(hash = 880682693)
+    private transient Long sender__resolvedKey;
 
     @Keep
     public Comment(User sender, String content) {
@@ -51,9 +55,6 @@ public class Comment {
     @Generated(hash = 1669165771)
     public Comment() {
     }
-
-    @Generated(hash = 880682693)
-    private transient Long sender__resolvedKey;
 
     public Long getSenderID() {
         return senderID;
@@ -144,4 +145,5 @@ public class Comment {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getCommentDao() : null;
     }
+
 }

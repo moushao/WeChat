@@ -16,8 +16,6 @@ import static com.tw.wechat.widget.pullryc.wrapperadapter.FixedViewInfo.ITEM_VIE
 import static com.tw.wechat.widget.pullryc.wrapperadapter.FixedViewInfo.ITEM_VIEW_TYPE_HEADER_START;
 
 /**
- * Created by 大灯泡 on 2017/3/15.
- * <p>
  * recyclerview的headerviewadapter包裹
  */
 
@@ -69,7 +67,7 @@ public class HeaderViewWrapperAdapter extends RecyclerView.Adapter implements Wr
         this.mWrappedAdapter = mWrappedAdapter;
         try {
             mWrappedAdapter.registerAdapterDataObserver(mDataObserver);
-        }catch (IllegalStateException e){
+        } catch (IllegalStateException e) {
             //maybe observer is added
         }
         if (mHeaderViewInfos == null) {
@@ -155,7 +153,8 @@ public class HeaderViewWrapperAdapter extends RecyclerView.Adapter implements Wr
     }
 
     private void checkAndSetRecyclerViewLayoutParams(View child) {
-        if (child == null) return;
+        if (child == null)
+            return;
         ViewGroup.LayoutParams p = child.getLayoutParams();
         if (p == null) {
             p = new ViewGroup.LayoutParams(new ViewGroup.MarginLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)));
@@ -191,7 +190,8 @@ public class HeaderViewWrapperAdapter extends RecyclerView.Adapter implements Wr
     @Override
     public int getItemViewType(int position) {
         int numHeaders = getHeadersCount();
-        if (mWrappedAdapter == null) return -1;
+        if (mWrappedAdapter == null)
+            return -1;
         //header之后的view，返回adapter的itemType
         int adjustPos = position - numHeaders;
         int adapterItemCount = mWrappedAdapter.getItemCount();
@@ -228,16 +228,19 @@ public class HeaderViewWrapperAdapter extends RecyclerView.Adapter implements Wr
     }
 
     public int findHeaderPosition(View headerView) {
-        if (headerView == null) return -1;
+        if (headerView == null)
+            return -1;
         for (int i = 0; i < mHeaderViewInfos.size(); i++) {
             FixedViewInfo info = mHeaderViewInfos.get(i);
-            if (info.view == headerView) return i;
+            if (info.view == headerView)
+                return i;
         }
         return -1;
     }
 
     public int findFooterPosition(View footerView) {
-        if (footerView == null) return -1;
+        if (footerView == null)
+            return -1;
         for (int i = 0; i < mHeaderViewInfos.size(); i++) {
             FixedViewInfo info = mHeaderViewInfos.get(i);
             if (info.view == footerView) {
@@ -260,7 +263,8 @@ public class HeaderViewWrapperAdapter extends RecyclerView.Adapter implements Wr
     }
 
     private void fixLayoutManager(RecyclerView.LayoutManager layoutManager) {
-        if (layoutManager == null) return;
+        if (layoutManager == null)
+            return;
         if (layoutManager instanceof GridLayoutManager) {
             fixGridLayoutManager((GridLayoutManager) layoutManager);
         }

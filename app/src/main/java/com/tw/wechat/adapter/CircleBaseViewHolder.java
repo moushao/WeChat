@@ -37,7 +37,6 @@ import androidx.annotation.NonNull;
  */
 public abstract class CircleBaseViewHolder extends BaseRecyclerViewHolder<Tweet> implements
         BaseMomentVH<Tweet>, ViewGroup.OnHierarchyChangeListener {
-    private User mUser;
     protected Context mContext;
 
     //头部
@@ -101,8 +100,6 @@ public abstract class CircleBaseViewHolder extends BaseRecyclerViewHolder<Tweet>
             deleteCommentPopup.setOnDeleteCommentClickListener(onDeleteCommentClickListener);
         }
         deleteRelease.setText("删除");
-
-
     }
 
 
@@ -128,7 +125,6 @@ public abstract class CircleBaseViewHolder extends BaseRecyclerViewHolder<Tweet>
     private void onBindMutualDataToViews(Tweet data) {
         //header
         ImageLoadManager.INSTANCE.loadImageWithRadius(avatar, data.getSender().getAvatar(), R.mipmap.ic_launcher, 20);
-
         nick.setText(data.getSender().getNick() + ":" + data.prePosition);
         if (TextUtils.isEmpty(data.getContent())) {
             userText.setText("", itemPosition);
@@ -153,7 +149,7 @@ public abstract class CircleBaseViewHolder extends BaseRecyclerViewHolder<Tweet>
         @Override
         public void onCommentClick(View v, @NonNull Tweet info) {
             if (mEventListener != null)
-                mEventListener.toggleShowCommentBox(itemView, null, itemPosition, info, null);
+                mEventListener.toggleShowCommentBox(itemView, null, itemPosition, null);
         }
     };
     private int commentLeftAndPaddintRight = UIHelper.dipToPx(8f);
@@ -231,7 +227,7 @@ public abstract class CircleBaseViewHolder extends BaseRecyclerViewHolder<Tweet>
             if (mEventListener.isMyContent(commentInfo.getSender().getNick())) {
                 deleteCommentPopup.showPopupWindow(commentInfo, ((CommentWidget) v).getCommentPosition());
             } else {
-                mEventListener.toggleShowCommentBox(null, (CommentWidget) v, itemPosition, null, commentInfo);
+                mEventListener.toggleShowCommentBox(null, (CommentWidget) v, itemPosition, commentInfo);
             }
         }
     };

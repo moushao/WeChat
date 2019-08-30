@@ -1,5 +1,7 @@
 package com.tw.wechat.entity;
 
+import java.security.Key;
+
 import android.text.TextUtils;
 
 import org.greenrobot.greendao.annotation.Entity;
@@ -10,44 +12,73 @@ import org.greenrobot.greendao.annotation.ToOne;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.DaoException;
+
 import com.tw.wechat.dao.DaoSession;
 import com.tw.wechat.dao.CommentDao;
 import com.tw.wechat.dao.PhotoDao;
 import com.tw.wechat.dao.UserDao;
 import com.tw.wechat.dao.TweetDao;
 
+/**
+ * 类名: {@link Tweet}
+ * <br/> 功能描述:朋友圈的实体类
+ * <br/> 作者: MouShao
+ * <br/> 时间: 2019/8/30
+ * <br/> 最后修改者:
+ * <br/> 最后修改内容:
+ */
 @Entity
 public class Tweet {
-
-    public boolean isQualified() {
-        if (TextUtils.isEmpty(content) && (images == null || images.size() == 0))
-            return false;
-        return true;
-    }
-
+    /**
+     * tweet的id,新的位置
+     */
     @Id
     private Long tweetId;
 
+    /**
+     * 网络加载下来的原始位置
+     */
     public int prePosition;
-
+    /**
+     * tweet内容
+     */
     private String content;
-
+    /**
+     * 发送人的id,用于数据库存储
+     */
     private Long senderID;
 
+    /**
+     * 发送人
+     */
     @ToOne(joinProperty = "senderID")
+    @Keep
     private User sender;
 
-    public void setSenderID(long senderID) {
-        this.senderID = senderID;
-    }
-
+    /**
+     * 图片列表
+     */
     @ToMany(referencedJoinProperty = "tweetId")
+    @Keep
     private List<Photo> images;
 
+    /**
+     * 评论列表
+     */
     @ToMany(referencedJoinProperty = "tweetId")
+    @Keep
     private List<Comment> comments;
+
+    /** Used to resolve relations */
+    @Generated(hash = 2040040024)
+    private transient DaoSession daoSession;
+
+    /** Used for active entity operations. */
+    @Generated(hash = 725714356)
+    private transient TweetDao myDao;
 
     @Generated(hash = 181437354)
     public Tweet(Long tweetId, int prePosition, String content, Long senderID) {
@@ -63,14 +94,6 @@ public class Tweet {
 
     @Generated(hash = 880682693)
     private transient Long sender__resolvedKey;
-
-    /** Used to resolve relations */
-    @Generated(hash = 2040040024)
-    private transient DaoSession daoSession;
-
-    /** Used for active entity operations. */
-    @Generated(hash = 725714356)
-    private transient TweetDao myDao;
 
     public Long getSenderID() {
         return senderID;
@@ -114,6 +137,10 @@ public class Tweet {
         this.sender = sender;
     }
 
+    public void setSenderID(long senderID) {
+        this.senderID = senderID;
+    }
+
     @Keep
     public List<Photo> getImages() {
         if (images == null) {
@@ -138,6 +165,15 @@ public class Tweet {
     @Keep
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    /**
+     * 判断当前Twitter是否合格
+     */
+    public boolean isQualified() {
+        if (TextUtils.isEmpty(content) && (images == null || images.size() == 0))
+            return false;
+        return true;
     }
 
     /** Resets a to-many relationship, making the next get call to query for a fresh result. */
@@ -194,5 +230,4 @@ public class Tweet {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getTweetDao() : null;
     }
-
 }

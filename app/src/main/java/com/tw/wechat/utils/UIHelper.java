@@ -14,8 +14,6 @@ import androidx.annotation.Nullable;
 
 
 /**
- * Created by 大灯泡 on 2016/10/26.
- * <p>
  * ui工具类
  */
 public class UIHelper {

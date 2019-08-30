@@ -14,11 +14,9 @@ import com.tw.wechat.R;
 
 
 /**
- * Created by 大灯泡 on 2016/11/22.
- * <p>
- * 加载更多
+ * 类名: {@link PullRefreshFooter}
+ * <br/> 功能描述:RecyclerView的加载更多footView
  */
-
 public class PullRefreshFooter extends FrameLayout {
 
     private RotateAnimation rotateAnimation;
@@ -54,17 +52,11 @@ public class PullRefreshFooter extends FrameLayout {
     }
 
     public void onFinish() {
-        //loadingView.postDelayed(new Runnable() {
-        //    @Override
-        //    public void run() {
-                Animation animation = new AlphaAnimation(1F, 0F);
-                animation.setDuration(400);
-                startAnimation(animation);
-                setVisibility(GONE);
-                loadingView.clearAnimation();
-        //    }
-        //}, 500);
-
+        Animation animation = new AlphaAnimation(1F, 0F);
+        animation.setDuration(400);
+        startAnimation(animation);
+        setVisibility(GONE);
+        loadingView.clearAnimation();
     }
 
 

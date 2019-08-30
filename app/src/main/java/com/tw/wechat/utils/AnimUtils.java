@@ -11,11 +11,10 @@ import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 
 /**
- * Created by 大灯泡 on 2017/2/28.
- * <p>
- * 动画帮助类
+ * 类名: {@link AnimUtils}
+ * <br/> 功能描述:动画帮助类
+ * <br/> 作者: MouShao
  */
-
 public class AnimUtils {
 
     private AnimUtils() {
@@ -62,7 +61,8 @@ public class AnimUtils {
         return translateAnimation;
     }
 
-    public static ScaleAnimation getScaleAnimation(float fromX, float toX, float fromY, float toY, int pivotXType, float pivotXValue, int pivotYType, float pivotYValue) {
+    public static ScaleAnimation getScaleAnimation(float fromX, float toX, float fromY, float toY, int pivotXType, float pivotXValue, int 
+            pivotYType, float pivotYValue) {
         ScaleAnimation scaleAnimation = new ScaleAnimation(fromX, toX, fromY, toY, pivotXType, pivotXValue, pivotYType, pivotYValue);
         scaleAnimation.setDuration(300L);
         scaleAnimation.setFillEnabled(true);

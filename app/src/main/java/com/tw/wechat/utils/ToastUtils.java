@@ -3,6 +3,9 @@ package com.tw.wechat.utils;
 import android.content.Context;
 import android.widget.Toast;
 
+/**
+ * Toast工具类
+ */
 public class ToastUtils {
 
     /**

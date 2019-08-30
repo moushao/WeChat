@@ -3,6 +3,7 @@ package com.tw.wechat.widget;
 import android.graphics.Rect;
 import android.view.View;
 
+import com.tw.wechat.utils.LogUtil;
 import com.tw.wechat.utils.UIHelper;
 import com.tw.wechat.widget.commentwidget.CommentBox;
 import com.tw.wechat.widget.commentwidget.CommentWidget;
@@ -12,16 +13,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 /**
- * Created by 大灯泡 on 2017/9/6.
+ * 类名: {@link CircleViewHelper}
+ * <br/> 功能描述:用于评论框弹出与隐藏时，辅助当前Item滑动的位置
  */
-
 public class CircleViewHelper {
     AppCompatActivity mActivity;
-
     //评论时对应的参照View
-    /**
-     */
     private View commentAnchorView;
+    //当前评论的item位置
     private int commentItemDataPosition;
 
     public CircleViewHelper(AppCompatActivity activity) {
@@ -65,7 +64,7 @@ public class CircleViewHelper {
                 if (anchorView instanceof CommentWidget || anchorView == null) {
                     return null;
                 }
-                scrollY = calcuateMomentsViewOffset(commentBox, anchorView);
+                scrollY = calculateMomentsViewOffset(commentBox, anchorView);
                 break;
             case CommentBox.CommentType.TYPE_REPLY:
                 if (!(anchorView instanceof CommentWidget)) {
@@ -74,7 +73,7 @@ public class CircleViewHelper {
                 CommentWidget commentWidget = (CommentWidget) anchorView;
                 if (commentWidget == null)
                     return null;
-                scrollY = calcuateCommentWidgetOffset(commentBox, commentWidget);
+                scrollY = calculateCommentWidgetOffset(commentBox, commentWidget);
                 circleRecyclerView.getRecyclerView().smoothScrollBy(0, scrollY);
                 break;
         }
@@ -111,7 +110,7 @@ public class CircleViewHelper {
      * @param commentWidget
      * @return
      */
-    private int calcuateCommentWidgetOffset(CommentBox commentBox, CommentWidget commentWidget) {
+    private int calculateCommentWidgetOffset(CommentBox commentBox, CommentWidget commentWidget) {
         if (commentWidgetLocation == null)
             commentWidgetLocation = new int[2];
         if (commentWidget == null)
@@ -126,7 +125,7 @@ public class CircleViewHelper {
      * @param momentsView
      * @return
      */
-    private int calcuateMomentsViewOffset(CommentBox commentBox, View momentsView) {
+    private int calculateMomentsViewOffset(CommentBox commentBox, View momentsView) {
         if (momentsViewLocation == null)
             momentsViewLocation = new int[2];
         if (momentsView == null)

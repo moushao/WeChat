@@ -17,17 +17,18 @@ import com.tw.wechat.utils.UIHelper;
 
 
 /**
- * Created by 大灯泡 on 2016/2/19.
- * 点击展开更多
+ * 类名: {@link ClickShowMoreLayout}
+ * <br/> 功能描述:点击展开更多
+ * <br/> 作者: MouShao
+ * <br/> 时间: 2019/8/30
+ * <br/> 最后修改者:
+ * <br/> 最后修改内容:
  */
 public class ClickShowMoreLayout extends LinearLayout implements View.OnClickListener {
-    private static final String TAG = "ClickShowMoreLayout";
 
 
     public static final int CLOSE = 0;
     public static final int OPEN = 1;
-
-    private int preState;
 
     private TextView mTextView;
     private TextView mClickToShow;
@@ -110,10 +111,9 @@ public class ClickShowMoreLayout extends LinearLayout implements View.OnClickLis
         }
         TEXT_STATE.put(getText().toString().hashCode(), state);
     }
-int posr ;
+
+
     public void setText(String str, int pos) {
-        LogUtil.e("pos",posr+":"+pos);
-        posr = pos;
         if (hasGetLineCount) {
             restoreState(str);
             mTextView.setText(str);

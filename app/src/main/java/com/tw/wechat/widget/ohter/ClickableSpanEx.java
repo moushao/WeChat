@@ -8,7 +8,7 @@
 *
 *
 * */
-package com.tw.wechat.widget;
+package com.tw.wechat.widget.ohter;
 
 import android.graphics.Color;
 import android.text.Layout;

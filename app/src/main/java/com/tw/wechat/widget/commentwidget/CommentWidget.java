@@ -3,15 +3,14 @@ package com.tw.wechat.widget.commentwidget;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
-import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.TextView;
 
 import com.tw.wechat.entity.Comment;
-import com.tw.wechat.widget.ClickableSpanEx;
-import com.tw.wechat.widget.SpannableStringBuilderCompat;
+import com.tw.wechat.widget.ohter.ClickableSpanEx;
+import com.tw.wechat.widget.ohter.SpannableStringBuilderCompat;
 
 import androidx.annotation.NonNull;
 
@@ -78,7 +77,7 @@ public class CommentWidget extends TextView {
         //boolean isApply = (TextUtils.isEmpty(info.getSender().getUsername()));
         //// 用户B为空，证明是一条原创评论
         //if (isApply) {
-            CommentClick userA = new CommentClick.Builder(getContext(), info)
+            CommentClickListener userA = new CommentClickListener.Builder(getContext(), info)
                     .setColor(0xff517fae)
                     .setClickEventColor(0xffc6c6c6)
                     .setTextSize(textSize)

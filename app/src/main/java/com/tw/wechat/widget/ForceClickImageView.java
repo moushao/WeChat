@@ -15,8 +15,12 @@ import com.tw.wechat.R;
 
 
 /**
- * Created by 大灯泡 on 2016/4/11.
- * 朋友圈的imageview，包含点击动作
+ * 类名: {@link ForceClickImageView}
+ * <br/> 功能描述:朋友圈的imageview，包含点击动作
+ * <br/> 作者: MouShao
+ * <br/> 时间: 2019/8/30
+ * <br/> 最后修改者:
+ * <br/> 最后修改内容:
  */
 public class ForceClickImageView extends ImageView {
     private static final String TAG = "ForceClickImageView";

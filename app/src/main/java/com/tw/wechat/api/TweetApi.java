@@ -20,9 +20,19 @@ import retrofit2.http.GET;
  * <br/> 最后修改内容:
  */
 public interface TweetApi {
+    /**
+     * 网络加载用户信息
+     *
+     * @return json结果
+     */
     @GET("user/jsmith/")
     Observable<ResponseBody> getUserInfo();
 
+    /**
+     * 网络加载tweet列表
+     *
+     * @return json结果
+     */
     @GET("user/jsmith/tweets/")
     Observable<ResponseBody> getTweets();
 }

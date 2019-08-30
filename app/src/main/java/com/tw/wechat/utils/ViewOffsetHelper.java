@@ -6,8 +6,6 @@ import android.view.View;
 import androidx.core.view.ViewCompat;
 
 /**
- * Created by 大灯泡 on 2017/02/28.
- * <p>
  * view偏移帮助类
  */
 public class ViewOffsetHelper {

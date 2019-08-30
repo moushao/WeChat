@@ -1,14 +1,12 @@
 package com.tw.wechat.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.tw.wechat.R;
 import com.tw.wechat.event.OnRecyclerViewItemClickListener;
-import com.tw.wechat.event.OnRecyclerViewLongItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,20 +16,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 /**
- * Created by 大灯泡 on 2016/7/20.
- * <p>
  * 抽象的adapter
  */
 
 public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<BaseRecyclerViewHolder<T>> {
-
-    private static final String TAG = "BaseRecyclerViewAdapter";
     protected Context context;
     protected List<T> mData;
     protected LayoutInflater mInflater;
 
     private OnRecyclerViewItemClickListener<T> onRecyclerViewItemClickListener;
-    private OnRecyclerViewLongItemClickListener<T> onRecyclerViewLongItemClickListener;
 
     public BaseRecyclerViewAdapter(@NonNull Context context, @NonNull List<T> datas) {
         this.context = context;
@@ -80,13 +73,11 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
                     onRecyclerViewItemClickListener.onItemClick(holder.itemView, layoutPosition, mData.get(layoutPosition));
                 }
             });
-        }
-        if (onRecyclerViewLongItemClickListener != null) {
             holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
                     int layoutPosition = holder.getAdapterPosition();
-                    onRecyclerViewLongItemClickListener.onItemLongClick(holder.itemView, layoutPosition, mData.get(layoutPosition));
+                    onRecyclerViewItemClickListener.onItemLongClick(holder.itemView, layoutPosition, mData.get(layoutPosition));
                     return false;
                 }
             });
@@ -119,34 +110,6 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
         return mData;
     }
 
-    public void addData(int pos, @NonNull T data) {
-        if (mData != null) {
-            mData.add(pos, data);
-            notifyItemInserted(pos);
-        }
-    }
-
-    public void addData(@NonNull T data) {
-        if (mData != null) {
-            mData.add(data);
-            notifyItemInserted(mData.size() - 1);
-        }
-    }
-
-    public void deleteData(int pos) {
-        if (mData != null && mData.size() > pos) {
-            mData.remove(pos);
-            notifyItemRemoved(pos);
-        }
-    }
-
-    public T findData(int pos) {
-        if (pos < 0 || pos > mData.size()) {
-            return null;
-        }
-        return mData.get(pos);
-    }
-
     protected abstract int getViewType(int position, @NonNull T data);
 
     protected abstract int getLayoutResId(int viewType);
@@ -165,13 +128,6 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
         this.onRecyclerViewItemClickListener = onRecyclerViewItemClickListener;
     }
 
-    public OnRecyclerViewLongItemClickListener<T> getOnRecyclerViewLongItemClickListener() {
-        return onRecyclerViewLongItemClickListener;
-    }
-
-    public void setOnRecyclerViewLongItemClickListener(OnRecyclerViewLongItemClickListener<T> onRecyclerViewLongItemClickListener) {
-        this.onRecyclerViewLongItemClickListener = onRecyclerViewLongItemClickListener;
-    }
 
     @Override
     public long getItemId(int position) {

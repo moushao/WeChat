@@ -15,11 +15,8 @@ import java.util.Locale;
 
 
 /**
- * Created by 大灯泡 on 2016/10/28.
- * <p>
  * 字符串工具类
  */
-
 public class StringUtil {
 
     public static boolean noEmpty(String originStr) {

@@ -19,7 +19,9 @@
         android:supportsRtl="true"
         android:theme="@style/NormalTheme"
         tools:replace="android:icon,android:theme,android:allowBackup,android:supportsRtl">
-        <activity android:name=".TweetActivity">
+        <activity android:name=".TweetActivity"
+            android:windowSoftInputMode="adjustPan"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

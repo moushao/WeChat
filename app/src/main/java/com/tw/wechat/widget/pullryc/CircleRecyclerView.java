@@ -8,7 +8,7 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 
-import com.tw.wechat.event.OnRefreshListener2;
+import com.tw.wechat.event.OnRefreshListener;
 
 import android.util.AttributeSet;
 import android.util.Log;
@@ -40,28 +40,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import me.everything.android.ui.overscroll.IOverScrollDecor;
-import me.everything.android.ui.overscroll.IOverScrollStateListener;
 import me.everything.android.ui.overscroll.IOverScrollUpdateListener;
 import me.everything.android.ui.overscroll.VerticalOverScrollBounceEffectDecorator;
 import me.everything.android.ui.overscroll.adapters.RecyclerViewOverScrollDecorAdapter;
 
 import static me.everything.android.ui.overscroll.IOverScrollState.STATE_BOUNCE_BACK;
-import static me.everything.android.ui.overscroll.IOverScrollState.STATE_DRAG_END_SIDE;
-import static me.everything.android.ui.overscroll.IOverScrollState.STATE_DRAG_START_SIDE;
-import static me.everything.android.ui.overscroll.IOverScrollState.STATE_IDLE;
 
 
 /**
- * Created by 大灯泡 on 2016/10/29.
- * <p>
  * 专为朋友圈项目定制的下拉recyclerview
  * 原因在于：
  * 1 - 目前而言，git上大多数的rv都是用的swiperefreshlayout
  * 2 - 大多数rv都不支持下拉后收回下拉头部的
  * 3 - 因为大多数的rv都支持太多功能了，显得有点重，并且有些想要的回调我们都没法拿到
- * <p>
- * 综上所述，干脆自己弄一个算了。。。。
- * <p>
  * 目标：
  * 【基本要求】因为相当于定制，只为本项目服务，因此不考虑通用性，更多考虑扩展性
  * <p>
@@ -98,12 +89,11 @@ public class CircleRecyclerView extends FrameLayout {
     private int pullMode;
 
 
-    //observer
+    //甜甜圈刷新的观察者
     private InnerRefreshIconObserver iconObserver;
 
-    //callback
-    private
-    OnRefreshListener2 onRefreshListener;
+    //刷新的回调监听
+    private OnRefreshListener onRefreshListener;
 
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
@@ -130,21 +120,16 @@ public class CircleRecyclerView extends FrameLayout {
     private void init(Context context) {
         if (isInEditMode())
             return;
-        GradientDrawable background = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, new
-                int[]{0xff323232, 0xff323232, 0xffffffff, 0xffffffff});
-        //TODO 
+        GradientDrawable background = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM,
+                new int[]{0xff323232, 0xff323232, 0xffffffff, 0xffffffff});
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             setBackground(background);
         }
 
         if (recyclerView == null) {
             recyclerView = (RecyclerView) LayoutInflater.from(context).inflate(R.layout.view_recyclerview, this, false);
-            //new出来的recyclerview并没有滚动条，原因：没有走到View.initializeScrollbars(TypedArray a)
-            //recyclerView = new RecyclerView(context);
             recyclerView.setBackgroundColor(Color.WHITE);
             linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
-            //渲染优化，放到render thread做，（prefetch在v25之后可用），机型在萝莉炮(lollipop)后才可以享受此优化（事实上默认是开启的）
-            //linearLayoutManager.setItemPrefetchEnabled(true);
             recyclerView.setLayoutManager(linearLayoutManager);
         }
         //取消默认item变更动画
@@ -156,18 +141,14 @@ public class CircleRecyclerView extends FrameLayout {
             refreshIcon.setImageResource(R.drawable.icon_rotate);
             refreshIcon.setVisibility(GONE);
         }
-        LayoutParams iconParam = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams
-                .WRAP_CONTENT);
-        iconParam.leftMargin = UIHelper.dipToPx(12);
+        LayoutParams iconParam = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         addView(recyclerView, RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.MATCH_PARENT);
+        iconParam.leftMargin = UIHelper.dipToPx(12);
         addView(refreshIcon, iconParam);
         refreshPosition = UIHelper.dipToPx(90);
         iconObserver = new InnerRefreshIconObserver(refreshIcon, refreshPosition);
-
         footerView = new PullRefreshFooter(getContext());
-
         addFooterView(footerView);
-
         recyclerView.addOnScrollListener(onScrollListener);
     }
 
@@ -213,11 +194,11 @@ public class CircleRecyclerView extends FrameLayout {
 
     //------------------------------------------get/set-----------------------------------------------
 
-    public OnRefreshListener2 getOnRefreshListener() {
+    public OnRefreshListener getOnRefreshListener() {
         return onRefreshListener;
     }
 
-    public void setOnRefreshListener(OnRefreshListener2 onRefreshListener) {
+    public void setOnRefreshListener(OnRefreshListener onRefreshListener) {
         this.onRefreshListener = onRefreshListener;
     }
 
@@ -248,33 +229,6 @@ public class CircleRecyclerView extends FrameLayout {
     private void initOverScroll() {
         IOverScrollDecor decor = new VerticalOverScrollBounceEffectDecorator(new RecyclerViewOverScrollDecorAdapter(
                 recyclerView), 2f, 1f, 2f);
-        decor.setOverScrollStateListener(new IOverScrollStateListener() {
-            @Override
-            public void onOverScrollStateChange(IOverScrollDecor decor,
-                                                int oldState,
-                                                int newState) {
-                switch (newState) {
-                    case STATE_IDLE:
-                        // No over-scroll is in effect.
-                        break;
-                    case STATE_DRAG_START_SIDE:
-                        // Dragging started at the left-end.
-                        break;
-                    case STATE_DRAG_END_SIDE:
-                        // Dragging started at the right-end.
-
-                        break;
-                    case STATE_BOUNCE_BACK:
-                        if (oldState == STATE_DRAG_START_SIDE) {
-                            // Dragging stopped -- view is starting to bounce back from the *left-end* onto natural 
-                            // prePosition.
-                        } else { // i.e. (oldState == STATE_DRAG_END_SIDE)
-                            // View is starting to bounce back from the *right-end*.
-                        }
-                        break;
-                }
-            }
-        });
 
         decor.setOverScrollUpdateListener(new IOverScrollUpdateListener() {
             @Override
@@ -313,12 +267,6 @@ public class CircleRecyclerView extends FrameLayout {
                 .computeVerticalScrollOffset() >= recyclerView.computeVerticalScrollRange();
     }
 
-
-    public int findFirstVisibleItemPosition() {
-        return linearLayoutManager.findFirstVisibleItemPosition();
-    }
-
-
     /**
      * scroll listener
      */
@@ -326,18 +274,6 @@ public class CircleRecyclerView extends FrameLayout {
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
             super.onScrollStateChanged(recyclerView, newState);
-            //fix issue #42
-            //按照原来的习惯，我是当RecyclerView滑动停止状态下才检查是否要自动加在更多，但就出现了一个问题，如#42提出的，手指不离开屏幕一直滑动
-            //就会无法加载更多，在iOS朋友圈里，不离开屏幕是可以继续加载的，因此将这里的逻辑移动到了onScrolled，不对滑动状态进行监听了
-            /*if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                if (isScrollToBottom() && currentStatus != REFRESHING) {
-                    onRefreshListener.onLoadMore();
-                    KLog.i("loadmoretag", "loadmore");
-                    pullMode = FROM_BOTTOM;
-                    setCurrentStatus(REFRESHING);
-                    footerView.onRefreshing();
-                }
-            }*/
         }
 
         @Override
@@ -354,7 +290,6 @@ public class CircleRecyclerView extends FrameLayout {
             if (scrollSize <= refreshPosition) {
                 refreshIcon.offsetTopAndBottom(-dy);
             }
-            //LogUtil.e("scrollSize", scrollSize + "");
         }
     };
 
@@ -531,26 +466,13 @@ public class CircleRecyclerView extends FrameLayout {
 
     private boolean checkFixedViewInfoNotAdded(FixedViewInfo info, List<FixedViewInfo> infoList) {
         boolean result = true;
-        //if (isListEmpty(infoList) || info == null) {
-        //    result = true;
-        //} else {
-        //TODO
         for (FixedViewInfo fixedViewInfo : infoList) {
             if (fixedViewInfo.view == info.view) {
                 result = false;
                 break;
             }
         }
-        //}
         return result;
-    }
-
-    public int getHeaderViewCount() {
-        return mHeaderViewInfos.size();
-    }
-
-    public int getFooterViewCount() {
-        return mFooterViewInfos.size();
     }
 
 

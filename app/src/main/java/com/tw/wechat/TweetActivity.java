@@ -1,10 +1,12 @@
 package com.tw.wechat;
 
+import android.app.StatusBarManager;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import com.jaeger.library.StatusBarUtil;
 import com.luck.picture.lib.PictureSelector;
@@ -17,76 +19,80 @@ import com.tw.wechat.entity.Photo;
 import com.tw.wechat.entity.Tweet;
 import com.tw.wechat.entity.User;
 import com.tw.wechat.event.CallBack;
-import com.tw.wechat.event.ItemListener;
-import com.tw.wechat.event.OnRefreshListener2;
+import com.tw.wechat.event.OnKeyboardStateChangeListener;
+import com.tw.wechat.event.OnRefreshListener;
 import com.tw.wechat.event.ViewListener;
-import com.tw.wechat.model.TweetController;
+import com.tw.wechat.controller.TweetController;
+import com.tw.wechat.utils.AndroidBug5497Workaround;
+import com.tw.wechat.utils.ChenJingET;
+import com.tw.wechat.utils.LogUtil;
 import com.tw.wechat.utils.ToastUtils;
 import com.tw.wechat.widget.CircleViewHelper;
 import com.tw.wechat.widget.commentwidget.CommentBox;
 import com.tw.wechat.widget.commentwidget.CommentWidget;
-import com.tw.wechat.widget.commentwidget.KeyboardControlMnanager;
+import com.tw.wechat.widget.commentwidget.KeyboardControlManager;
 import com.tw.wechat.widget.pullryc.CircleRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class TweetActivity extends AppCompatActivity implements CircleRecyclerView.OnPreDispatchTouchListener {
-    CircleRecyclerView circleRecyclerView;
-    private HostViewHolder hostViewHolder;
+    @BindView(R.id.recycler) CircleRecyclerView circleRecyclerView;
+    @BindView(R.id.widget_comment) CommentBox commentBox;
     private Context mContext;
-    private CircleMomentsAdapter adapter;
     private boolean isLoadMore;
-    private CommentBox commentBox;
+    private HostViewHolder hostViewHolder;
+    private CircleMomentsAdapter adapter;
     private CircleViewHelper mViewHelper;
+    //当前用户
     private User user;
+    //分页查询的便宜位置
     private int offset;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        StatusBarUtil.setTranslucentForImageView(this, 0, null);
-        circleRecyclerView = findViewById(R.id.recycler);
-        commentBox = findViewById(R.id.widget_comment);
-        mContext = this;
+        ButterKnife.bind(this);
         initWidget();
+        initAdapter();
         TweetController.getInstance().getUser(callBack);
         TweetController.getInstance().getTweets(offset, callBack);
-        ToastUtils.showToast(this, Build.VERSION.SDK_INT + "");
     }
 
+    //初始化控件
     private void initWidget() {
+        mContext = this;
+        StatusBarUtil.setTranslucentForImageView(this, 0, null);
+        //StatusBarUtil.setTranslucentDiff(this);
+        commentBox.setOnCommentSendClickListener(onCommentSendClickListener);
+        circleRecyclerView.setOnRefreshListener(refreshListener);
+        circleRecyclerView.setOnPreDispatchTouchListener(this);
+        initKeyboardHeightObserver();
+        //ChenJingET.assistActivity(this);
+        //AndroidBug5497Workaround.assistActivity(this, onKeyboardChange);
+    }
+
+    //初始化adapter
+    private void initAdapter() {
         if (mViewHelper == null) {
             mViewHelper = new CircleViewHelper(this);
         }
-        hostViewHolder = new HostViewHolder(this, new ItemListener() {
-            @Override
-            public void onItemClick(View view, int position, Object mData) {
-                ToastUtils.showToast(mContext, "照片墙被点击了");
-            }
-        });
-
-        circleRecyclerView.setOnRefreshListener(refreshListener);
-        circleRecyclerView.setOnPreDispatchTouchListener(this);
+        hostViewHolder = new HostViewHolder(this);
         circleRecyclerView.addHeaderView(hostViewHolder.getView());
-
-        commentBox = (CommentBox) findViewById(R.id.widget_comment);
-        commentBox.setOnCommentSendClickListener(onCommentSendClickListener);
-
-        CircleMomentsAdapter.Builder<Tweet> builder = new CircleMomentsAdapter.Builder<>(this);
-        adapter = builder
+        adapter = new CircleMomentsAdapter.Builder<>(this)
                 .addType(MultiImageMomentsVH.class, 2, R.layout.moments_multi_image)
                 .setListener(viewListener)
                 .build();
         circleRecyclerView.setAdapter(adapter);
-        initKeyboardHeightObserver();
     }
 
-    private OnRefreshListener2 refreshListener =
-            new OnRefreshListener2() {
+    private OnRefreshListener refreshListener =
+            new OnRefreshListener() {
                 @Override
                 public void onRefresh() {
                     TweetController.getInstance().getUser(callBack);
@@ -115,7 +121,7 @@ public class TweetActivity extends AppCompatActivity implements CircleRecyclerVi
 
     private ViewListener viewListener = new ViewListener() {
         @Override
-        public void toggleShowCommentBox(View view, CommentWidget commentWidget, int itemPos, Tweet tweet, Comment comment) {
+        public void toggleShowCommentBox(View view, CommentWidget commentWidget, int itemPos, Comment comment) {
             if (view != null) {
                 mViewHelper.setCommentAnchorView(view);
             } else if (commentWidget != null) {
@@ -175,10 +181,10 @@ public class TweetActivity extends AppCompatActivity implements CircleRecyclerVi
         }
     };
 
+    //观察键盘弹出与消退
     private void initKeyboardHeightObserver() {
-        //观察键盘弹出与消退
-        KeyboardControlMnanager.observerKeyboardVisibleChange(this, new KeyboardControlMnanager
-                .OnKeyboardStateChangeListener() {
+        KeyboardControlManager.observerKeyboardVisibleChange(this, new KeyboardControlManager.OnKeyboardStateChangeListener() {
+
             View anchorView;
 
             @Override
@@ -186,12 +192,17 @@ public class TweetActivity extends AppCompatActivity implements CircleRecyclerVi
                 int commentType = commentBox.getCommentType();
                 if (isVisible) {
                     //定位评论框到view
+                    //ToastUtils.showToast(mContext, keyboardHeight + "");
+                    int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+                    int barhei = getResources().getDimensionPixelSize(resourceId);
+                    LogUtil.e("bar",barhei+"");
+                    commentBox.offsetTopAndBottom(-keyboardHeight+barhei);
                     anchorView = mViewHelper.alignCommentBoxToView(circleRecyclerView, commentBox, commentType);
+                    //circleRecyclerView.getRecyclerView().smoothScrollBy(0, keyboardHeight);
                 } else {
                     //定位到底部
                     commentBox.dismissCommentBox(false);
-                    mViewHelper.alignCommentBoxToViewWhenDismiss(
-                            circleRecyclerView, commentBox, commentType, anchorView);
+                    mViewHelper.alignCommentBoxToViewWhenDismiss(circleRecyclerView, commentBox, commentType, anchorView);
                 }
             }
         });
@@ -225,4 +236,20 @@ public class TweetActivity extends AppCompatActivity implements CircleRecyclerVi
     };
 
 
+    public OnKeyboardStateChangeListener onKeyboardChange = new OnKeyboardStateChangeListener() {
+        View anchorView;
+
+        @Override
+        public void onKeyboardChange(int keyboardHeight, boolean isVisible) {
+            int commentType = commentBox.getCommentType();
+            if (isVisible) {
+                //定位评论框到view
+                anchorView = mViewHelper.alignCommentBoxToView(circleRecyclerView, commentBox, commentType);
+            } else {
+                //定位到底部
+                commentBox.dismissCommentBox(false);
+                mViewHelper.alignCommentBoxToViewWhenDismiss(circleRecyclerView, commentBox, commentType, anchorView);
+            }
+        }
+    };
 }

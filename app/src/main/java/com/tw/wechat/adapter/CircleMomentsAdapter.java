@@ -18,11 +18,11 @@ import androidx.annotation.NonNull;
 
 
 /**
- * Created by 大灯泡 on 2016/11/1.
- * <p>
- * 朋友圈adapter
+ * 类名: {@link CircleMomentsAdapter}
+ * <br/> 功能描述: 朋友圈adapter
+ * <br/> 作者: MouShao
+ * <br/> 时间: 2019/8/30
  */
-
 public class CircleMomentsAdapter extends BaseRecyclerViewAdapter<Tweet> {
 
 
@@ -30,8 +30,7 @@ public class CircleMomentsAdapter extends BaseRecyclerViewAdapter<Tweet> {
     private ViewListener mListener;
 
 
-    private CircleMomentsAdapter(@NonNull Context context,
-                                 @NonNull List<Tweet> datas) {
+    private CircleMomentsAdapter(@NonNull Context context, @NonNull List<Tweet> datas) {
         super(context, datas);
     }
 
@@ -129,10 +128,6 @@ public class CircleMomentsAdapter extends BaseRecyclerViewAdapter<Tweet> {
             e.printStackTrace();
         }
         return null;
-    }
-
-    public boolean isListEmpty(List<?> datas) {
-        return datas == null || datas.size() <= 0;
     }
 
 }

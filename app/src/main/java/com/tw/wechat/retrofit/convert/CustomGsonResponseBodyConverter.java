@@ -3,7 +3,6 @@ package com.tw.wechat.retrofit.convert;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
-import com.tw.wechat.utils.AssetsToString;
 import com.tw.wechat.utils.JsonFormat;
 import com.tw.wechat.utils.LogUtil;
 
@@ -35,8 +34,6 @@ public class CustomGsonResponseBodyConverter<T> implements Converter<ResponseBod
     @Override
     public T convert(ResponseBody value) throws IOException {
         String response = JsonFormat.format(value.string());
-        if (response.contains("["))
-            response = AssetsToString.xmlToString("tweets.json");
         LogUtil.e("response", response);
         response = response.replace("profile-image", "profileImage");
         InputStream inputStream = new ByteArrayInputStream(response.getBytes());

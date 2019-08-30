@@ -7,24 +7,23 @@ import android.view.View;
 
 import com.tw.wechat.entity.Comment;
 import com.tw.wechat.utils.DimenUtil;
-import com.tw.wechat.widget.ClickableSpanEx;
+import com.tw.wechat.widget.ohter.ClickableSpanEx;
 
 import androidx.annotation.NonNull;
 
 
 /**
- * Created by 大灯泡 on 2016/2/23.
  * 评论点击事件
  */
-public class CommentClick extends ClickableSpanEx {
+public class CommentClickListener extends ClickableSpanEx {
     private Context mContext;
     private int textSize;
     private Comment mUserInfo;
 
-    private CommentClick() {
+    private CommentClickListener() {
     }
 
-    private CommentClick(Builder builder) {
+    private CommentClickListener(Builder builder) {
         super(builder.color, builder.clickEventColor);
         mContext = builder.mContext;
         mUserInfo = builder.mUserInfo;
@@ -69,8 +68,8 @@ public class CommentClick extends ClickableSpanEx {
             return this;
         }
 
-        public CommentClick build() {
-            return new CommentClick(this);
+        public CommentClickListener build() {
+            return new CommentClickListener(this);
         }
     }
 }

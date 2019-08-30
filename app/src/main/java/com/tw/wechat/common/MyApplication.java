@@ -1,11 +1,9 @@
 package com.tw.wechat.common;
 
 import android.app.Application;
-import android.app.NotificationManager;
 
 import com.luck.picture.lib.PictureSelectorActivity;
 import com.tw.wechat.dao.DaoManager;
-import com.tw.wechat.utils.CrashHandler;
 import com.tw.wechat.utils.LogUtil;
 
 import me.jessyan.autosize.AutoSizeConfig;
@@ -14,7 +12,7 @@ import me.jessyan.autosize.unit.Subunits;
 
 /**
  * 类名: MyApplication
- * <br/> 功能描述:
+ * <br/> 功能描述:Application全局管理类,用于数据库的初始化、界面适配的初始化
  * <br/> 作者: MouTao
  * <br/> 时间: 2017/6/21
  */
@@ -28,7 +26,6 @@ public class MyApplication extends Application {
         mMyApplication = this;
         initAutoSize();
         DaoManager.initDao(this);
-        CrashHandler.getInstance().init(this);
     }
 
     public static MyApplication getApplication() {

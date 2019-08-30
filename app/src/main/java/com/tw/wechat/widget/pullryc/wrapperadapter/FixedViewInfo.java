@@ -2,12 +2,11 @@ package com.tw.wechat.widget.pullryc.wrapperadapter;
 
 import android.view.View;
 
-/**
- * Created by 大灯泡 on 2017/3/15.
- * <p>
- * 用于recyclerview的header和footer的view fix info
- */
 
+/**
+ * 类名: {@link FixedViewInfo}
+ * <br/> 功能描述:用于recyclerview的header和footer的view fix info
+ */
 public class FixedViewInfo {
 
     /**
@@ -28,7 +27,6 @@ public class FixedViewInfo {
     public final View view;
     /**
      * 因为onCreateViewHolder不包含位置信息，所以itemViewType需要包含位置信息
-     * <p>
      * 位置信息方法：将位置添加到高位
      */
     public final int itemViewType;

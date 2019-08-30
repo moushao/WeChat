@@ -26,11 +26,11 @@ import androidx.annotation.NonNull;
 
 
 /**
- * Created by 大灯泡 on 2016/11/3.
- * <p>
- * 九宮格圖片的vh
+ * 类名: {@link MultiImageMomentsVH}
+ * <br/> 功能描述:九宮格圖片的vh
+ * <br/> 作者: MouShao
+ * <br/> 时间: 2019/8/30
  */
-
 public class MultiImageMomentsVH extends CircleBaseViewHolder implements PhotoContents.OnItemClickListener {
 
     private PhotoContents imageContainer;
@@ -50,7 +50,6 @@ public class MultiImageMomentsVH extends CircleBaseViewHolder implements PhotoCo
 
     @Override
     public void onBindDataToView(@NonNull Tweet data, int position, int viewType) {
-        
         if (adapter == null) {
             adapter = new InnerContainerAdapter(getContext(), data.getImages());
             imageContainer.setAdapter(adapter);
@@ -62,7 +61,7 @@ public class MultiImageMomentsVH extends CircleBaseViewHolder implements PhotoCo
 
     @Override
     public void onItemClick(ImageView imageView, int position) {
-        mEventListener.preViewPicture(mTweet.getImages(),position);
+        mEventListener.preViewPicture(mTweet.getImages(), position);
     }
 
 
@@ -88,7 +87,6 @@ public class MultiImageMomentsVH extends CircleBaseViewHolder implements PhotoCo
             if (convertView == null) {
                 convertView = new ForceClickImageView(context);
                 convertView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                //                convertView.setScaleType(ImageView.ScaleType.FIT_CENTER);
             }
             return convertView;
         }

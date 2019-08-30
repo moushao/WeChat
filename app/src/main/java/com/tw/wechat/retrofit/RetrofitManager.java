@@ -2,9 +2,7 @@ package com.tw.wechat.retrofit;
 
 
 import com.tw.wechat.api.TweetApi;
-import com.tw.wechat.retrofit.convert.CustomGsonConverterFactory;
 import com.tw.wechat.retrofit.convert.CustomInterceptor;
-import com.tw.wechat.utils.LogUtil;
 
 import java.util.concurrent.TimeUnit;
 
@@ -55,8 +53,8 @@ public class RetrofitManager {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
     }
-    
-    public TweetApi getApi(){
+
+    public TweetApi getApi() {
         if (mApi == null) {
             mApi = getRetrofit().create(TweetApi.class);
         }

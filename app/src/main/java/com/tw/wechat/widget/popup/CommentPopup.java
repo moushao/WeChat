@@ -25,11 +25,9 @@ import razerdp.basepopup.BasePopupWindow;
 
 
 /**
- * Created by 大灯泡 on 2016/3/6.
  * 朋友圈点赞
  */
 public class CommentPopup extends BasePopupWindow implements View.OnClickListener {
-    private static final String TAG = "CommentPopup";
 
     private ImageView mLikeView;
     private TextView mLikeText;
@@ -110,7 +108,7 @@ public class CommentPopup extends BasePopupWindow implements View.OnClickListene
                     mLikeView.clearAnimation();
                     mLikeView.startAnimation(mScaleAnimation);
                 }
-                ToastUtils.showToast(mLikeText.getContext(),"点了个赞");
+                ToastUtils.showToast(mLikeText.getContext(), "点了个赞");
                 break;
             case R.id.item_comment:
                 if (mOnCommentPopupClickListener != null) {

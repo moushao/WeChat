@@ -14,6 +14,12 @@ import com.bumptech.glide.load.resource.bitmap.TransformationUtils;
 
 import java.security.MessageDigest;
 
+/**
+ * 类名: {@link GlideRoundTransform}
+ * <br/> 功能描述:Glide的TransForm辅助类,用于解决CenterCrop和圆角的冲突!shit!!!
+ * <br/> 作者: MouShao
+ * <br/> 时间: 2019/8/30
+ */
 public class GlideRoundTransform extends BitmapTransformation {
 
     private static int radius = 0;
