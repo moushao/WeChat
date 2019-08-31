@@ -11,6 +11,7 @@ import android.widget.FrameLayout;
 import com.jaeger.library.StatusBarUtil;
 
 import java.lang.ref.WeakReference;
+import java.security.PrivilegedAction;
 
 /**
  * 类名: {@link KeyboardControlManager}
@@ -19,7 +20,6 @@ import java.lang.ref.WeakReference;
 public class KeyboardControlManager {
     private OnKeyboardStateChangeListener onKeyboardStateChangeListener;
     private WeakReference<Activity> act;
-    private ViewGroup.LayoutParams frameLayoutParams;
 
     private KeyboardControlManager(Activity act, OnKeyboardStateChangeListener onKeyboardStateChangeListener) {
         this.act = new WeakReference<Activity>(act);
@@ -53,13 +53,12 @@ public class KeyboardControlManager {
                     if (isVisible != preVisible) {
                         onKeyboardStateChangeListener.onKeyboardChange(keyboardHeight, isVisible);
                         preVisible = isVisible;
+
                     }
                 }
                 preKeyboardHeight = keyboardHeight;
-                decorView.invalidate();
             }
         });
-        frameLayoutParams = decorView.getLayoutParams();
     }
 
     public static void observerKeyboardVisibleChange(Activity act, OnKeyboardStateChangeListener onKeyboardStateChangeListener) {

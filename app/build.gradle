@@ -62,6 +62,8 @@ dependencies {
     implementation rootProject.ext.dependencies["glide"]
     annotationProcessor rootProject.ext.dependencies["glide:compiler"]
 
+    implementation rootProject.ext.dependencies["qmui"]
+    
     implementation 'org.apmem.tools:layouts:1.10@aar'
     implementation 'com.github.razerdp:BasePopup:2.2.1'
 //    implementation 'com.facebook.stetho:stetho-okhttp3:1.5.1'

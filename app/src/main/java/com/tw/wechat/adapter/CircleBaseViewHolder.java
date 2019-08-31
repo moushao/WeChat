@@ -127,11 +127,11 @@ public abstract class CircleBaseViewHolder extends BaseRecyclerViewHolder<Tweet>
         ImageLoadManager.INSTANCE.loadImageWithRadius(avatar, data.getSender().getAvatar(), R.mipmap.ic_launcher, 20);
         nick.setText(data.getSender().getNick() + ":" + data.prePosition);
         if (TextUtils.isEmpty(data.getContent())) {
-            userText.setText("", itemPosition);
+            userText.setText(data);
             userText.setVisibility(View.GONE);
         } else {
             if (!userText.getText().toString().equals(data.getContent()))
-                userText.setText(data.getContent(), itemPosition);
+                userText.setText(data);
             userText.setVisibility(View.VISIBLE);
         }
         boolean needCommentData = addComment(data.getComments());

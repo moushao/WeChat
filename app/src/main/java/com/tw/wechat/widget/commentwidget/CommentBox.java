@@ -9,6 +9,8 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.qmuiteam.qmui.util.QMUIKeyboardHelper;
+import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.tw.wechat.R;
 import com.tw.wechat.entity.Comment;
 import com.tw.wechat.entity.Comment;
@@ -72,9 +74,11 @@ public class CommentBox extends FrameLayout {
             @Override
             public void onClick(View v) {
                 if (onCommentSendClickListener != null) {
-                    onCommentSendClickListener.onCommentSendClick(
-                            commentInfo == null ? null : commentInfo,
-                            mInputContent.getText().toString().trim());
+                    String content = mInputContent.getText().toString().trim();
+                    if (commentInfo != null) {
+                        content = commentInfo.getSender().getNick() + ":" + content;
+                    }
+                    onCommentSendClickListener.onCommentSendClick(commentInfo == null ? null : commentInfo, content);
                 }
             }
         });

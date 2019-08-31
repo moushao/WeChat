@@ -141,26 +141,4 @@ public class UIHelper {
             }, delayMillis);
         }
     }
-
-
-    /**
-     * Toast封装
-     */
-    public static void ToastMessage(String msg) {
-        Toast.makeText(MyApplication.getApplication(), msg, Toast.LENGTH_LONG).show();
-    }
-
-
-    /**
-     * =============================================================
-     * 资源工具
-     */
-
-    public static int getResourceColor(int colorResId) {
-        try {
-            return MyApplication.getApplication().getResources().getColor(colorResId);
-        } catch (Exception e) {
-            return Color.TRANSPARENT;
-        }
-    }
 }

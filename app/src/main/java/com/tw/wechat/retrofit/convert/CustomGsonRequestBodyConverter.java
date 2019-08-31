@@ -3,7 +3,6 @@ package com.tw.wechat.retrofit.convert;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonWriter;
-import com.tw.wechat.utils.JsonFormat;
 import com.tw.wechat.utils.LogUtil;
 
 import java.io.IOException;
@@ -39,8 +38,6 @@ public class CustomGsonRequestBodyConverter<T> implements Converter<T, RequestBo
         JsonWriter jsonWriter = gson.newJsonWriter(writer);
         adapter.write(jsonWriter, value);
         jsonWriter.close();
-        String json = JsonFormat.format(adapter.toJson(value));
-        LogUtil.e("request", json);
         return RequestBody.create(MEDIA_TYPE, buffer.readByteString());
     }
 

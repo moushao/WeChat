@@ -1,6 +1,7 @@
 package com.tw.wechat.widget;
 
 import android.graphics.Rect;
+import android.util.Log;
 import android.view.View;
 
 import com.tw.wechat.utils.LogUtil;
@@ -78,6 +79,7 @@ public class CircleViewHelper {
                 break;
         }
         circleRecyclerView.getRecyclerView().smoothScrollBy(0, scrollY);
+        LogUtil.e("scrollY", scrollY + "");
         return anchorView;
 
     }

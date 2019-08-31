@@ -3,14 +3,16 @@ package com.tw.wechat.widget.commentwidget;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.TextView;
 
 import com.tw.wechat.entity.Comment;
-import com.tw.wechat.widget.ohter.ClickableSpanEx;
-import com.tw.wechat.widget.ohter.SpannableStringBuilderCompat;
 
 import androidx.annotation.NonNull;
 
@@ -24,7 +26,6 @@ public class CommentWidget extends TextView {
     //用户名颜色
     private int textColor = 0xff517fae;
     private static final int textSize = 14;
-    SpannableStringBuilderCompat mSpannableStringBuilderCompat;
     private int commentPositon;
 
     public CommentWidget(Context context, int commentPositon) {
@@ -40,7 +41,7 @@ public class CommentWidget extends TextView {
         this.commentPositon = commentPositon;
 
         setMovementMethod(LinkMovementMethod.getInstance());
-        setOnTouchListener(new ClickableSpanEx.ClickableSpanSelector());
+        //setOnTouchListener(new ClickableSpanEx.ClickableSpanSelector());
         this.setHighlightColor(0x00000000);
         setTextSize(textSize);
     }
@@ -53,7 +54,7 @@ public class CommentWidget extends TextView {
         setTextSize(textSize);
     }
 
-    public void setCommentText(Comment info,int commentPosition) {
+    public void setCommentText(Comment info, int commentPosition) {
         if (info == null)
             return;
         try {
@@ -67,26 +68,28 @@ public class CommentWidget extends TextView {
     }
 
     private void createCommentStringBuilder(@NonNull Comment info) {
-        if (mSpannableStringBuilderCompat == null) {
-            mSpannableStringBuilderCompat = new SpannableStringBuilderCompat();
-        } else {
-            mSpannableStringBuilderCompat.clear();
-            mSpannableStringBuilderCompat.clearSpans();
+        String repet = "回复:";
+        if (info.getContent().contains(":"))
+            repet = repet.replace(":", "");
+
+        String text = info.getSender().getNick() + repet + info.getContent();
+        SpannableStringBuilder ssb = new SpannableStringBuilder(text);
+        ssb.setSpan(new ForegroundColorSpan(textColor),
+                0, text.indexOf("回"),
+                Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        ssb.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), 0, text.indexOf("回"), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE); //粗体 
+
+        if (text.indexOf("复") + 1 != text.indexOf(":")) {
+            ssb.setSpan(new ForegroundColorSpan(textColor),
+                    text.indexOf("复") + 1,
+                    text.indexOf(":"),
+                    Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            ssb.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), text.indexOf("复") + 1,
+                    text.indexOf(":"), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE); //粗体 
         }
-        String content = ": " + info.getContent() + "\0";
-        //boolean isApply = (TextUtils.isEmpty(info.getSender().getUsername()));
-        //// 用户B为空，证明是一条原创评论
-        //if (isApply) {
-            CommentClickListener userA = new CommentClickListener.Builder(getContext(), info)
-                    .setColor(0xff517fae)
-                    .setClickEventColor(0xffc6c6c6)
-                    .setTextSize(textSize)
-                    .build();
-            mSpannableStringBuilderCompat.append(info.getSender().getNick(), userA, 0);
-            mSpannableStringBuilderCompat.append(content);
-       
-            
-        setText(mSpannableStringBuilderCompat);
+
+
+        setText(ssb);
     }
 
     public Comment getData() throws ClassCastException {

@@ -12,22 +12,21 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.tw.wechat.R;
+import com.tw.wechat.entity.Tweet;
 import com.tw.wechat.utils.LogUtil;
+import com.tw.wechat.utils.TextStateManager;
 import com.tw.wechat.utils.UIHelper;
 
 
 /**
  * 类名: {@link ClickShowMoreLayout}
- * <br/> 功能描述:点击展开更多
+ * <br/> 功能描述:点击展开更多,注意holder的view缓存,导致数据混乱
  * <br/> 作者: MouShao
- * <br/> 时间: 2019/8/30
- * <br/> 最后修改者:
- * <br/> 最后修改内容:
  */
 public class ClickShowMoreLayout extends LinearLayout implements View.OnClickListener {
 
 
-    public static final int CLOSE = 0;
+    public static final int CLOSE = -1;
     public static final int OPEN = 1;
 
     private TextView mTextView;
@@ -40,10 +39,6 @@ public class ClickShowMoreLayout extends LinearLayout implements View.OnClickLis
     private String clickText;
 
     private boolean hasMore;
-    private boolean hasGetLineCount = false;
-
-
-    private static final SparseIntArray TEXT_STATE = new SparseIntArray();
 
     public ClickShowMoreLayout(Context context) {
         this(context, null);
@@ -94,7 +89,11 @@ public class ClickShowMoreLayout extends LinearLayout implements View.OnClickLis
     @Override
     public void onClick(View v) {
         boolean needOpen = TextUtils.equals(((TextView) v).getText().toString(), clickText);
-        setState(needOpen ? OPEN : CLOSE);
+        int state = needOpen ? OPEN : CLOSE;
+        setState(state);
+        int hasCode = getText().hashCode();
+        if (hasCode != 0)
+            TextStateManager.INSTANCE.put(getText().hashCode(), state);
     }
 
 
@@ -109,41 +108,41 @@ public class ClickShowMoreLayout extends LinearLayout implements View.OnClickLis
                 mClickToShow.setText("收起");
                 break;
         }
-        TEXT_STATE.put(getText().toString().hashCode(), state);
     }
 
 
-    public void setText(String str, int pos) {
-        if (hasGetLineCount) {
-            restoreState(str);
-            mTextView.setText(str);
-        } else {
+    public void setText(Tweet tweet) {
+        if (tweet.getPrePosition() == 21) {
+            LogUtil.e("发送到");
+        }
+        int hasCode = tweet.getContent().hashCode();
+        if (hasCode == 0) {
+            mTextView.setText("");
+            mClickToShow.setVisibility(GONE);
+            return;
+        }
+        int state = TextStateManager.INSTANCE.get(hasCode);
+        String str = tweet.getContent();
+        if (state == 0 || state == CLOSE) {//没有保存过状态,则直接设置文字并保存状态
             mTextView.setText(str);
             mTextView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
                 @Override
                 public boolean onPreDraw() {
-                    if (!hasGetLineCount) {
-                        hasMore = mTextView.getLineCount() > showLine;
-                        hasGetLineCount = true;
-                    }
+                    hasMore = mTextView.getLineCount() > showLine;
                     mClickToShow.setVisibility(hasMore ? VISIBLE : GONE);
                     mTextView.getViewTreeObserver().removeOnPreDrawListener(this);
                     return true;
                 }
             });
-            setState(CLOSE);
+            TextStateManager.INSTANCE.put(hasCode, CLOSE);
+        } else if (state == OPEN) {//保存过状态,且状态是1
+            mTextView.setMaxLines(Integer.MAX_VALUE);
+            mTextView.setText(str);
+            mClickToShow.setText("收起");
+            mClickToShow.setVisibility(VISIBLE);
         }
-    }
 
-    private void restoreState(String str) {
-        int state = CLOSE;
-        int holderState = TEXT_STATE.get(str.hashCode(), -1);
-        if (holderState == -1) {
-            TEXT_STATE.put(str.hashCode(), state);
-        } else {
-            state = holderState;
-        }
-        setState(state);
+
     }
 
     public CharSequence getText() {

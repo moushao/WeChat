@@ -1,18 +1,25 @@
 <resources>
-
-    <style name="NormalTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+    <!--<style name="QMUITheme" parent="QMUI.C"-->
+    <style name="NormalTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <!-- 配置Android提供的theme -->
+        <!-- 配置qmui提供的theme -->
+        <!--<item name="android:windowFullscreen">true</item>-->
+        <!--<item name="android:windowSoftInputMode">adjustPan</item>-->
+        <item name="qmui_content_spacing_horizontal">20dp</item>
+        <item name="qmui_content_padding_horizontal">@dimen/qmui_content_spacing_horizontal</item>
+        <!--<item name="windowActionBar">false</item>-->
+        <!--<item name="windowNoTitle">true</item>-->
         <item name="android:screenOrientation">portrait</item>
         <!--<item name="android:windowTranslucentStatus" tools:targetApi="kitkat">true</item>-->
-        <item name="android:windowIsTranslucent">false</item>
-        <item name="android:windowShowWallpaper">false</item>
+        <!--<item name="android:windowIsTranslucent">false</item>-->
+        <!--<item name="android:windowShowWallpaper">false</item>-->
+
     </style>
 
     <style name="base_divider">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0.5dp</item>
-        <item name="android:background">@color/color_gray_divider</item>
+        <!--<item name="android:background">@color/color_gray_divider</item>-->
     </style>
 
     <declare-styleable name="ClickShowMoreLayout">
