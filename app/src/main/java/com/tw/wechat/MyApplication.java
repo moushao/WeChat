@@ -1,4 +1,4 @@
-package com.tw.wechat.common;
+package com.tw.wechat;
 
 import android.app.Application;
 

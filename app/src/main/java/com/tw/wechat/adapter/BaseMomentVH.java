@@ -5,7 +5,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 
 /**
- * 抽象出的vh接口
+ * 抽象出的vh接口,用于子类的数据传递
  */
 
 public interface BaseMomentVH<T> {

@@ -23,9 +23,9 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import razerdp.basepopup.BasePopupWindow;
 
-
 /**
- * 朋友圈点赞
+ * 类名: {@link CommentPopup}
+ * <br/> 功能描述:朋友圈点赞、添加评论的Pop
  */
 public class CommentPopup extends BasePopupWindow implements View.OnClickListener {
 

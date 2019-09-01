@@ -8,8 +8,6 @@ import android.view.ViewGroup;
 import androidx.recyclerview.widget.RecyclerView;
 
 /**
- * Created by 大灯泡 on 2016/11/1.
- *
  * 对viewholder的封装
  */
 

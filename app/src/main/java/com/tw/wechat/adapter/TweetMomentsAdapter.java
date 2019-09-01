@@ -1,7 +1,6 @@
 package com.tw.wechat.adapter;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,23 +17,21 @@ import androidx.annotation.NonNull;
 
 
 /**
- * 类名: {@link CircleMomentsAdapter}
+ * 类名: {@link TweetMomentsAdapter}
  * <br/> 功能描述: 朋友圈adapter
- * <br/> 作者: MouShao
- * <br/> 时间: 2019/8/30
  */
-public class CircleMomentsAdapter extends BaseRecyclerViewAdapter<Tweet> {
+public class TweetMomentsAdapter extends BaseRecyclerViewAdapter<Tweet> {
 
 
     private SparseArray<ViewHoldernfo> viewHolderKeyArray;
     private ViewListener mListener;
 
 
-    private CircleMomentsAdapter(@NonNull Context context, @NonNull List<Tweet> datas) {
+    private TweetMomentsAdapter(@NonNull Context context, @NonNull List<Tweet> datas) {
         super(context, datas);
     }
 
-    private CircleMomentsAdapter(Builder builder) {
+    private TweetMomentsAdapter(Builder builder) {
         this(builder.context, builder.datas);
         this.viewHolderKeyArray = builder.viewHolderKeyArray;
         this.mListener = builder.mListener;
@@ -97,8 +94,8 @@ public class CircleMomentsAdapter extends BaseRecyclerViewAdapter<Tweet> {
             return this;
         }
 
-        public CircleMomentsAdapter build() {
-            return new CircleMomentsAdapter(this);
+        public TweetMomentsAdapter build() {
+            return new TweetMomentsAdapter(this);
         }
 
     }

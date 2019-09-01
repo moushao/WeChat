@@ -1,13 +1,7 @@
-package com.tw.wechat.api;
+package com.tw.wechat.retrofit;
 
-
-import com.tw.wechat.entity.Tweet;
-import com.tw.wechat.entity.User;
-
-import java.util.List;
 
 import io.reactivex.Observable;
-import okhttp3.Response;
 import okhttp3.ResponseBody;
 import retrofit2.http.GET;
 

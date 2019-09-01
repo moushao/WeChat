@@ -6,14 +6,10 @@ import com.tw.wechat.entity.User;
 import java.util.List;
 
 /**
- * 类名: {@link CallBack}
- * <br/> 功能描述: vm模式,Model层和View层之间的回调借口
- * <br/> 作者: MouTao
- * <br/> 时间: 2019/8/36
- * <br/> 最后修改者:MouTao
- * <br/> 最后修改内容:首次创建
+ * 类名: {@link VCCallBack}
+ * <br/> 功能描述: vc模式,Model层和View层之间的回调借口
  */
-public interface CallBack {
+public interface VCCallBack {
     /**
      * 成功获取User后的回调
      *

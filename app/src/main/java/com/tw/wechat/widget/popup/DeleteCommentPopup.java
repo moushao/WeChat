@@ -2,7 +2,6 @@ package com.tw.wechat.widget.popup;
 
 import android.app.Activity;
 import android.view.View;
-import android.view.animation.Animation;
 import android.widget.TextView;
 
 import com.tw.wechat.R;
@@ -10,10 +9,9 @@ import com.tw.wechat.entity.Comment;
 
 import razerdp.basepopup.BasePopupWindow;
 
-
 /**
- * Created by 大灯泡 on 2016/4/22.
- * 删除评论的popup
+ * 类名: {@link DeleteCommentPopup}
+ * <br/> 功能描述:删除评论的popup
  */
 public class DeleteCommentPopup extends BasePopupWindow implements View.OnClickListener {
 

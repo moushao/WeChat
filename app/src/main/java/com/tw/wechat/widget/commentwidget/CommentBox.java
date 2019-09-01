@@ -2,26 +2,20 @@ package com.tw.wechat.widget.commentwidget;
 
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.qmuiteam.qmui.util.QMUIKeyboardHelper;
-import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.tw.wechat.R;
 import com.tw.wechat.entity.Comment;
-import com.tw.wechat.entity.Comment;
-import com.tw.wechat.utils.StringUtil;
 import com.tw.wechat.utils.UIHelper;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 import androidx.annotation.IntDef;
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 /**

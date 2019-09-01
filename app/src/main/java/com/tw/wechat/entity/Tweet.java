@@ -25,10 +25,6 @@ import com.tw.wechat.dao.TweetDao;
 /**
  * 类名: {@link Tweet}
  * <br/> 功能描述:朋友圈的实体类
- * <br/> 作者: MouShao
- * <br/> 时间: 2019/8/30
- * <br/> 最后修改者:
- * <br/> 最后修改内容:
  */
 @Entity
 public class Tweet {

@@ -1,4 +1,4 @@
-package com.tw.wechat.retrofit.convert;
+package com.tw.wechat.retrofit;
 
 import java.io.IOException;
 

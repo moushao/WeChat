@@ -1,9 +1,6 @@
 package com.tw.wechat.retrofit;
 
 
-import com.tw.wechat.api.TweetApi;
-import com.tw.wechat.retrofit.convert.CustomInterceptor;
-
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.annotations.NonNull;

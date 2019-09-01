@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.tw.wechat.R;
-import com.tw.wechat.event.OnRecyclerViewItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +23,6 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
     protected List<T> mData;
     protected LayoutInflater mInflater;
 
-    private OnRecyclerViewItemClickListener<T> onRecyclerViewItemClickListener;
 
     public BaseRecyclerViewAdapter(@NonNull Context context, @NonNull List<T> datas) {
         this.context = context;
@@ -51,6 +49,7 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
         } else {
             holder = getViewHolder(parent, null, viewType);
         }
+        //点击事件实现
         setUpItemEvent(holder);
         return holder;
     }
@@ -64,24 +63,6 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
     }
 
     private void setUpItemEvent(final BaseRecyclerViewHolder holder) {
-        if (onRecyclerViewItemClickListener != null) {
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //这个获取位置的方法，防止添加删除导致位置不变
-                    int layoutPosition = holder.getAdapterPosition();
-                    onRecyclerViewItemClickListener.onItemClick(holder.itemView, layoutPosition, mData.get(layoutPosition));
-                }
-            });
-            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    int layoutPosition = holder.getAdapterPosition();
-                    onRecyclerViewItemClickListener.onItemLongClick(holder.itemView, layoutPosition, mData.get(layoutPosition));
-                    return false;
-                }
-            });
-        }
     }
 
     @Override
@@ -118,14 +99,6 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Ba
 
     protected void onBindData(BaseRecyclerViewHolder<T> holder, T data, int position) {
 
-    }
-
-    public OnRecyclerViewItemClickListener<T> getOnRecyclerViewItemClickListener() {
-        return onRecyclerViewItemClickListener;
-    }
-
-    public void setOnRecyclerViewItemClickListener(OnRecyclerViewItemClickListener<T> onRecyclerViewItemClickListener) {
-        this.onRecyclerViewItemClickListener = onRecyclerViewItemClickListener;
     }
 
 

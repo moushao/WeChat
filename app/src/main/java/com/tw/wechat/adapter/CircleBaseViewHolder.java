@@ -12,15 +12,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
+import com.bumptech.glide.Glide;
 import com.tw.wechat.R;
 import com.tw.wechat.entity.Comment;
 import com.tw.wechat.entity.Tweet;
-import com.tw.wechat.entity.User;
 import com.tw.wechat.event.ViewListener;
-import com.tw.wechat.photo.SimpleObjectPool;
+import com.tw.wechat.widget.photo.SimpleObjectPool;
 import com.tw.wechat.utils.ImageLoadManager;
 import com.tw.wechat.utils.UIHelper;
-import com.tw.wechat.widget.ClickShowMoreLayout;
+import com.tw.wechat.widget.commentwidget.ContentWidget;
 import com.tw.wechat.widget.commentwidget.CommentWidget;
 import com.tw.wechat.widget.popup.CommentPopup;
 import com.tw.wechat.widget.popup.DeleteCommentPopup;
@@ -31,9 +31,8 @@ import androidx.annotation.NonNull;
 
 
 /**
- * Created by 大灯泡 on 2016/11/1.
- * <p>
- * 朋友圈基本item
+ * 类名: {@link CircleBaseViewHolder}
+ * <br/> 功能描述:朋友圈基本item
  */
 public abstract class CircleBaseViewHolder extends BaseRecyclerViewHolder<Tweet> implements
         BaseMomentVH<Tweet>, ViewGroup.OnHierarchyChangeListener {
@@ -42,7 +41,7 @@ public abstract class CircleBaseViewHolder extends BaseRecyclerViewHolder<Tweet>
     //头部
     protected ImageView avatar;
     protected TextView nick;
-    protected ClickShowMoreLayout userText;
+    protected ContentWidget userText;
 
     //底部
     protected TextView createTime;
@@ -75,17 +74,16 @@ public abstract class CircleBaseViewHolder extends BaseRecyclerViewHolder<Tweet>
         //header
         avatar = (ImageView) findView(avatar, R.id.avatar);
         nick = (TextView) findView(nick, R.id.nick);
-        userText = (ClickShowMoreLayout) findView(userText, R.id.item_text_field);
+        userText = (ContentWidget) findView(userText, R.id.item_text_field);
 
         //bottom
         createTime = (TextView) findView(createTime, R.id.create_time);
         deleteRelease = (TextView) itemView.findViewById(R.id.delete_release);
 
-        // deleteRelease = (TextView) findView(deleteRelease, R.id.delete_release);
         commentImage = (ImageView) findView(commentImage, R.id.menu_img);
         menuButton = (FrameLayout) findView(menuButton, R.id.menu_button);
         commentAndPraiseLayout = (LinearLayout) findView(commentAndPraiseLayout, R.id.comment_praise_layout);
-        //praiseWidget = (PraiseWidget) findView(praiseWidget, R.id.praise);
+
         line = findView(line, R.id.divider);
         commentLayout = (LinearLayout) findView(commentLayout, R.id.comment_layout);
         //content
@@ -124,8 +122,9 @@ public abstract class CircleBaseViewHolder extends BaseRecyclerViewHolder<Tweet>
 
     private void onBindMutualDataToViews(Tweet data) {
         //header
-        ImageLoadManager.INSTANCE.loadImageWithRadius(avatar, data.getSender().getAvatar(), R.mipmap.ic_launcher, 20);
-        nick.setText(data.getSender().getNick() + ":" + data.prePosition);
+        ImageLoadManager.INSTANCE.loadImageWithRadius(avatar, data.getSender().getAvatar(), R.drawable.pic_default_head, 20);
+
+        nick.setText(data.getSender().getNick()/* + ":" + data.prePosition*/);
         if (TextUtils.isEmpty(data.getContent())) {
             userText.setText(data);
             userText.setVisibility(View.GONE);

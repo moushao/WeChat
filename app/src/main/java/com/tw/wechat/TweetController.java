@@ -1,4 +1,4 @@
-package com.tw.wechat.controller;
+package com.tw.wechat;
 
 
 import android.text.TextUtils;
@@ -13,7 +13,7 @@ import com.tw.wechat.entity.Comment;
 import com.tw.wechat.entity.Photo;
 import com.tw.wechat.entity.Tweet;
 import com.tw.wechat.entity.User;
-import com.tw.wechat.event.CallBack;
+import com.tw.wechat.event.VCCallBack;
 import com.tw.wechat.retrofit.RetrofitManager;
 import com.tw.wechat.utils.LogUtil;
 
@@ -29,8 +29,6 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
-
-import com.tw.wechat.TweetActivity;
 
 import io.reactivex.Observable;
 
@@ -62,7 +60,7 @@ public class TweetController {
      * <br/>    1:首先异步从本地数据库加载
      * <br/>    2:主线程回调，判断数据是否为空，空则网络请求加载，不为空则直接回调View层
      */
-    public void getUser(final CallBack callBack) {
+    public void getUser(final VCCallBack callBack) {
         Observable.create(new ObservableOnSubscribe() {
             @Override
             public void subscribe(ObservableEmitter emitter) throws Exception {
@@ -103,7 +101,7 @@ public class TweetController {
      * <br/>    2:保存用户信息到本地数据库
      * <br/>    3:回调主线程，回调View层，界面刷新
      */
-    private void getUserFromServer(final CallBack callBack) {
+    private void getUserFromServer(final VCCallBack callBack) {
         RetrofitManager.getInstance()
                 .getApi()
                 .getUserInfo()
@@ -147,7 +145,7 @@ public class TweetController {
      * <br/>    2:不为空则查询Tweet的发送人、内容、图片列表、和评论列表,然后进行第三步
      * <br/>    3:回调主线程,
      */
-    public void getTweets(final int offset, final CallBack callBack) {
+    public void getTweets(final int offset, final VCCallBack callBack) {
         Observable.create(new ObservableOnSubscribe() {
             @Override
             public void subscribe(ObservableEmitter emitter) throws Exception {
@@ -224,7 +222,7 @@ public class TweetController {
      * <br/>    2:判断数据是否大于5条,如果大于5则只取前五条
      * <br/>    3:回调主线程,刷新界面
      */
-    public void getTweetsFromServer(final CallBack callBack) {
+    public void getTweetsFromServer(final VCCallBack callBack) {
         RetrofitManager.getInstance()
                 .getApi()
                 .getTweets()
@@ -292,11 +290,11 @@ public class TweetController {
      * <br/> 方法名称: saveTweet
      * <br/> 方法详述: 保存Tweet
      * <br/>一条Tweet包含以下属性
-     * <br/>      原始原json位置;内容content,图片列表images,发布人sender,评论列表comments
-     * <br/>      评论列表包含评论content
+     * <br/>    1: 原始原json位置;内容content,图片列表images,发布人sender,评论列表comments
+     * <br/>    2: 评论列表包含评论content
      * <br/>保存数据库:
      * <br/>    1:ToOne   先保存注解对象,再保存主对象
-     * <br/>    3:ToMany  先保存主对象,再保存注解对象
+     * <br/>    2:ToMany  先保存主对象,再保存注解对象
      * <br/>综上所述:保存一条含有ToOne和ToMany的主对象,应该先保存ToOne注解对象,再保存主对象,最后保存ToMany注解对象
      */
     private void saveTweet(Tweet tw) {
@@ -310,12 +308,12 @@ public class TweetController {
     /**
      * <br/> 方法名称: saveComments
      * <br/> 方法详述: 保存评论列表
-     * <br/>一条评论包含以下属性
+     * <br/>一条评论包含以下属性:
      * <br/>      评论内容
      * <br/>      评论人
      * <br/>保存数据库:
      * <br/>    1:ToOne   先保存注解对象,再保存主对象
-     * <br/>    3:ToMany  先保存主对象,再保存注解对象
+     * <br/>    2:ToMany  先保存主对象,再保存注解对象
      * <br/>综上所述:保存一条含有ToOne和ToMany的主对象,应该先保存ToOne注解对象,再保存主对象,最后保存ToMany注解对象
      */
     private void saveComments(Tweet tw) {
@@ -328,7 +326,7 @@ public class TweetController {
             User user = comment.getSender();
             long rowID = saveUser(user);
             comment.setSenderID(rowID);
-            DaoManager.getInstance().getSession().getCommentDao().insert(comment);
+            DaoManager.getInstance().getSession().getCommentDao().insertOrReplace(comment);
         }
     }
 
@@ -342,7 +340,7 @@ public class TweetController {
             return;
         for (Photo photo : photos) {
             photo.setTweetId(tw.getTweetId());
-            DaoManager.getInstance().getSession().getPhotoDao().insert(photo);
+            DaoManager.getInstance().getSession().getPhotoDao().insertOrReplace(photo);
         }
     }
 

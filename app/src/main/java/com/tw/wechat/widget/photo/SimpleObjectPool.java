@@ -1,11 +1,10 @@
-package com.tw.wechat.photo;
+package com.tw.wechat.widget.photo;
+
 
 /**
- * Created by 大灯泡 on 2016/11/1.
- * <p>
- * 简单的对象池
+ * 类名: {@link SimpleObjectPool}
+ * <br/> 功能描述:简单的对象池
  */
-
 public class SimpleObjectPool<T> {
 
     private T[] objsPool;
@@ -18,7 +17,8 @@ public class SimpleObjectPool<T> {
     }
 
     public synchronized T get() {
-        if (curPointer == -1 || curPointer > objsPool.length) return null;
+        if (curPointer == -1 || curPointer > objsPool.length)
+            return null;
         T obj = objsPool[curPointer];
         objsPool[curPointer] = null;
         curPointer--;

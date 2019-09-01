@@ -1,4 +1,4 @@
-package com.tw.wechat.widget;
+package com.tw.wechat.widget.photo;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -15,28 +15,24 @@ import com.tw.wechat.R;
 
 
 /**
- * 类名: {@link ForceClickImageView}
- * <br/> 功能描述:朋友圈的imageview，包含点击动作
- * <br/> 作者: MouShao
- * <br/> 时间: 2019/8/30
- * <br/> 最后修改者:
- * <br/> 最后修改内容:
+ * 类名: {@link PhotoWidget}
+ * <br/> 功能描述:朋友圈的imageview，包含点击动作,去除蒙层
  */
-public class ForceClickImageView extends ImageView {
+public class PhotoWidget extends ImageView {
     private static final String TAG = "ForceClickImageView";
     //前景层
     private Drawable mForegroundDrawable;
     private Rect mCachedBounds = new Rect();
 
-    public ForceClickImageView(Context context) {
+    public PhotoWidget(Context context) {
         this(context, null);
     }
 
-    public ForceClickImageView(Context context, AttributeSet attrs) {
+    public PhotoWidget(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public ForceClickImageView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public PhotoWidget(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs, true);
         setFocusable(true);
@@ -46,10 +42,10 @@ public class ForceClickImageView extends ImageView {
      * 初始化
      */
     private void init(Context context, AttributeSet attrs, boolean needDefaultForceGroundColor) {
-        final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ForceClickImageView);
-        mForegroundDrawable = a.getDrawable(R.styleable.ForceClickImageView_foregroundColor);
+        final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.PhotoWidget);
+        mForegroundDrawable = a.getDrawable(R.styleable.PhotoWidget_foregroundColor);
         if (mForegroundDrawable instanceof ColorDrawable || (attrs == null && needDefaultForceGroundColor)) {
-            int foreGroundColor = a.getColor(R.styleable.ForceClickImageView_foregroundColor, 0x00000000);
+            int foreGroundColor = a.getColor(R.styleable.PhotoWidget_foregroundColor, 0x00000000);
             mForegroundDrawable = new StateListDrawable();
             ColorDrawable forceDrawable = new ColorDrawable(foreGroundColor);
             ColorDrawable normalDrawable = new ColorDrawable(Color.TRANSPARENT);

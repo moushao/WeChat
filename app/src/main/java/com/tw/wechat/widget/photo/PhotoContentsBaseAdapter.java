@@ -1,17 +1,13 @@
-package com.tw.wechat.photo;
+package com.tw.wechat.widget.photo;
 
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.tw.wechat.photo.observer.PhotoAdapterObservable;
-import com.tw.wechat.photo.observer.PhotoBaseDataObserver;
+import com.tw.wechat.widget.photo.observer.PhotoAdapterObservable;
+import com.tw.wechat.widget.photo.observer.PhotoBaseDataObserver;
 
 import androidx.annotation.NonNull;
 
-
-/**
- * Created by 大灯泡 on 2016/11/9.
- */
 
 public abstract class PhotoContentsBaseAdapter {
 

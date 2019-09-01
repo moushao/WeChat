@@ -11,13 +11,11 @@ import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.tw.wechat.R;
-import com.tw.wechat.common.MyApplication;
 import com.tw.wechat.entity.Photo;
 import com.tw.wechat.entity.Tweet;
-import com.tw.wechat.photo.PhotoContents;
-import com.tw.wechat.photo.PhotoContentsBaseAdapter;
-import com.tw.wechat.utils.ToastUtils;
-import com.tw.wechat.widget.ForceClickImageView;
+import com.tw.wechat.widget.photo.PhotoContents;
+import com.tw.wechat.widget.photo.PhotoContentsBaseAdapter;
+import com.tw.wechat.widget.photo.PhotoWidget;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +26,6 @@ import androidx.annotation.NonNull;
 /**
  * 类名: {@link MultiImageMomentsVH}
  * <br/> 功能描述:九宮格圖片的vh
- * <br/> 作者: MouShao
- * <br/> 时间: 2019/8/30
  */
 public class MultiImageMomentsVH extends CircleBaseViewHolder implements PhotoContents.OnItemClickListener {
 
@@ -69,9 +65,9 @@ public class MultiImageMomentsVH extends CircleBaseViewHolder implements PhotoCo
 
         private RequestOptions options = new RequestOptions()
                 .centerCrop()
-                .placeholder(R.mipmap.ic_launcher)
+                .placeholder(R.drawable.pic_failure)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .error(R.mipmap.ic_launcher)
+                .error(R.drawable.pic_failure)
                 .priority(Priority.HIGH);
         private Context context;
         private List<Photo> datas;
@@ -85,7 +81,7 @@ public class MultiImageMomentsVH extends CircleBaseViewHolder implements PhotoCo
         @Override
         public ImageView onCreateView(ImageView convertView, ViewGroup parent, int position) {
             if (convertView == null) {
-                convertView = new ForceClickImageView(context);
+                convertView = new PhotoWidget(context);
                 convertView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             }
             return convertView;
@@ -94,6 +90,7 @@ public class MultiImageMomentsVH extends CircleBaseViewHolder implements PhotoCo
         @Override
         public void onBindData(int position, @NonNull ImageView convertView) {
             Glide.with(context).load(datas.get(position).getUrl()).apply(options).into(convertView);
+
         }
 
         @Override

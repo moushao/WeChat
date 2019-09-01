@@ -1,4 +1,4 @@
-package com.tw.wechat.photo.observer;
+package com.tw.wechat.widget.photo.observer;
 
 /**
  * Created by 大灯泡 on 2016/11/9.

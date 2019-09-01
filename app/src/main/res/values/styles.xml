@@ -22,7 +22,7 @@
         <!--<item name="android:background">@color/color_gray_divider</item>-->
     </style>
 
-    <declare-styleable name="ClickShowMoreLayout">
+    <declare-styleable name="ContentWidget">
         <attr name="show_line"
               format="integer"/>
         <attr name="click_text"

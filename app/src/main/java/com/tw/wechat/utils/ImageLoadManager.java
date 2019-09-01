@@ -68,6 +68,7 @@ public enum ImageLoadManager {
                     .apply(new RequestOptions()).transform(new GlideRoundTransform(getImageContext(imageView), radius))
                     .thumbnail(loadTransform(imageView.getContext(), thumbDrawable, radius))
                     .into(imageView);
+
         } catch (Exception e) {
             e.printStackTrace();
         }

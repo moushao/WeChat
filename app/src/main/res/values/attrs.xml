@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--ForceClickImageView-->
-    <declare-styleable name="ForceClickImageView">
+    <declare-styleable name="PhotoWidget">
         <attr name="foregroundColor" format="reference|color"/>
     </declare-styleable>
 </resources>

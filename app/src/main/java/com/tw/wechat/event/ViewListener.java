@@ -12,8 +12,6 @@ import java.util.List;
 /**
  * 类名: {@link ViewListener}
  * <br/> 功能描述:用于Adapter中与主界面的交互回调
- * <br/> 作者: MouShao
- * <br/> 时间: 2019/8/30
  */
 public interface ViewListener {
     /**

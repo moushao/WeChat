@@ -1,10 +1,9 @@
-package com.tw.wechat.widget;
+package com.tw.wechat.widget.commentwidget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.SparseIntArray;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -19,11 +18,10 @@ import com.tw.wechat.utils.UIHelper;
 
 
 /**
- * 类名: {@link ClickShowMoreLayout}
+ * 类名: {@link ContentWidget}
  * <br/> 功能描述:点击展开更多,注意holder的view缓存,导致数据混乱
- * <br/> 作者: MouShao
  */
-public class ClickShowMoreLayout extends LinearLayout implements View.OnClickListener {
+public class ContentWidget extends LinearLayout implements View.OnClickListener {
 
 
     public static final int CLOSE = -1;
@@ -40,21 +38,21 @@ public class ClickShowMoreLayout extends LinearLayout implements View.OnClickLis
 
     private boolean hasMore;
 
-    public ClickShowMoreLayout(Context context) {
+    public ContentWidget(Context context) {
         this(context, null);
     }
 
-    public ClickShowMoreLayout(Context context, AttributeSet attrs) {
+    public ContentWidget(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public ClickShowMoreLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ContentWidget(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ClickShowMoreLayout);
-        textColor = a.getColor(R.styleable.ClickShowMoreLayout_text_color, 0xff1a1a1a);
-        textSize = a.getDimensionPixelSize(R.styleable.ClickShowMoreLayout_text_size, 14);
-        showLine = a.getInt(R.styleable.ClickShowMoreLayout_show_line, 8);
-        clickText = a.getString(R.styleable.ClickShowMoreLayout_click_text);
+        final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ContentWidget);
+        textColor = a.getColor(R.styleable.ContentWidget_text_color, 0xff1a1a1a);
+        textSize = a.getDimensionPixelSize(R.styleable.ContentWidget_text_size, 14);
+        showLine = a.getInt(R.styleable.ContentWidget_show_line, 8);
+        clickText = a.getString(R.styleable.ContentWidget_click_text);
         if (TextUtils.isEmpty(clickText))
             clickText = "全文";
         a.recycle();

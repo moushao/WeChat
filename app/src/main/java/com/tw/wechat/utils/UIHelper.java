@@ -1,14 +1,12 @@
 package com.tw.wechat.utils;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Handler;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import com.tw.wechat.common.MyApplication;
+import com.tw.wechat.MyApplication;
 
 import androidx.annotation.Nullable;
 

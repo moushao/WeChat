@@ -1,17 +1,11 @@
-package com.tw.wechat.widget.commentwidget;
+package com.tw.wechat.utils;
 
 import android.app.Activity;
-import android.app.StatusBarManager;
 import android.graphics.Rect;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.widget.FrameLayout;
-
-import com.jaeger.library.StatusBarUtil;
 
 import java.lang.ref.WeakReference;
-import java.security.PrivilegedAction;
 
 /**
  * 类名: {@link KeyboardControlManager}

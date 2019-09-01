@@ -4,11 +4,24 @@ import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 
+/**
+ * 类名: {@link Photo}
+ * <br/> 功能描述:朋友圈照片的实体类
+ */
 @Entity
 public class Photo {
+    /**
+     * 数据存储id
+     */
     @Id
     private Long Id;
+    /**
+     * 关联tweet的id
+     */
     private Long tweetId;
+    /**
+     * 图片url
+     */
     private String url;
 
     @Generated(hash = 34307316)

@@ -16,7 +16,7 @@
         android:paddingRight="@dimen/item_padding"
         >
 
-        <com.tw.wechat.photo.PhotoContents
+        <com.tw.wechat.widget.photo.PhotoContents
             android:id="@+id/circle_image_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

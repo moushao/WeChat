@@ -1,7 +1,6 @@
-package com.tw.wechat.photo;
+package com.tw.wechat.widget.photo;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Matrix;
 import android.graphics.Rect;
@@ -16,12 +15,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 
-import com.luck.picture.lib.PictureSelector;
 import com.tw.wechat.R;
-import com.tw.wechat.TweetActivity;
-import com.tw.wechat.common.MyApplication;
-import com.tw.wechat.photo.observer.PhotoBaseDataObserver;
-import com.tw.wechat.utils.ToastUtils;
+import com.tw.wechat.widget.photo.observer.PhotoBaseDataObserver;
 
 import org.apmem.tools.layouts.FlowLayout;
 
@@ -30,13 +25,10 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 
-
 /**
- * Created by 大灯泡 on 2016/11/9.
- * <p>
- * 适用于朋友圈的九宫格图片显示(用于listview等)
+ * 类名: {@link PhotoContents}
+ * <br/> 功能描述:用于朋友圈的九宫格图片显示(用于listview等)
  */
-
 public class PhotoContents extends FlowLayout {
 
     private final int INVALID_POSITION = -1;

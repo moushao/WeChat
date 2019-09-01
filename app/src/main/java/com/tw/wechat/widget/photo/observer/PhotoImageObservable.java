@@ -1,4 +1,4 @@
-package com.tw.wechat.photo.observer;
+package com.tw.wechat.widget.photo.observer;
 
 import java.util.ArrayList;
 

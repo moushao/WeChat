@@ -18,8 +18,8 @@ import androidx.annotation.NonNull;
 
 
 /**
- * Created by 大灯泡 on 2016/2/23.
- * 评论控件
+ * 类名: {@link CommentBox}
+ * <br/> 功能描述:展示评论的控件
  */
 public class CommentWidget extends TextView {
     private static final String TAG = "CommentWidget";
