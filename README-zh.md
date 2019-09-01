@@ -6,13 +6,13 @@
 *    |----- TweetActivity: Tweet列表界面
 *    |----- TweetController: TweetActivity的业务控制器,用于加载tweet数据
 *    |----- adapter
-	* |-----BaseRecyclerViewAdapter: 抽象的BaseAdapter
-   	    * |----- TweetMomentsAdapter: 朋友圈列表的Adapter
-    * |----- BaseRecyclerViewHolder: 抽象的BaseHolder
+     * |-----BaseRecyclerViewAdapter: 抽象的BaseAdapter
+        * |----- TweetMomentsAdapter: 朋友圈列表的Adapter
+     * |----- BaseRecyclerViewHolder: 抽象的BaseHolder
     	* |----- CircleBaseViewHolder: 朋友圈的基本holder,用于处理公共数据和view
-   		    * |----- MultiImageMomentsVH: 九宫格类型的Holder
-    * |----- BaseMomentVH: TweetMomentsAdapter的抽象接口,用于子类的数据传递 	
-    * |----- HostViewHolder: recycle头部、照片墙的hodler,
+   	    * |----- MultiImageMomentsVH: 九宫格类型的Holder
+     * |----- BaseMomentVH: TweetMomentsAdapter的抽象接口,用于子类的数据传递 	
+     * |----- HostViewHolder: recycle头部、照片墙的hodler,
 * |----- entity
 	* |----- Comment: 朋友圈评论的实体类
     	* |----- Photo: 朋友圈照片的实体类
