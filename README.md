@@ -12,7 +12,7 @@
 		* |----- **TweetMomentsAdapter**: Adapter for TweetActivity's tweets list
      * |----- **BaseRecyclerViewHolder**: abstract BaseHolder
     	* |----- **CircleBaseViewHolder**: The basic holder of the circle of friends, used to process public data and views
-   		* |----- **MultiImageMomentsVH**: Holder of the nine-square pictures
+   		  * |----- **MultiImageMomentsVH**: Holder of the nine-square pictures
      * |----- **BaseMomentVH**: Abstract interface for TweetMomentsAdapter andr for data passing by subclasses 	
      * |----- **HostViewHolder**: photo wall hodler,the head of Recyclerview,
 * |----- **entity**
