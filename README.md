@@ -21,7 +21,7 @@
     	* |----- **Tweet**: Entity class of friend circle tweets
         * |----- **User**: Entity class of friend circle user,same with sender
 * |----- **dao**: entity class created by GreenDao derived class
-* |-----**event**
+* |----- **event**
 	* |-----**OnRefreshListener**: the callbackk for refresh and loadMore listener
     * |-----**VCCallBack**: in vc model,the callBack between of Control and View
     * |----- **ViewListener**: the callBack for using in adapter to listening view's regular click event
@@ -29,7 +29,7 @@
 	* |-----**Interceptor**: interceptor,setting request header when Http requets
     * |----- **RetrofitManager**: Retrofit management class, initialize Retrofit, bridge Retrofit and OKHttp
     * |----- **TweetApi**: the callBack for  loading service data
-* |-----**widget**
+* |----- **widget**
 	* |----- **CircleViewHelper**: Used to assist the current item slide position when the comment box pops up and hides
     * |----- **comment**
     	* |----- **CommentBox**: A widget for intput comment text
