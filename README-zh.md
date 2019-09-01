@@ -1,85 +1,85 @@
-# Homework 说明
-## 项目架构
-### 包名:com.tw.wechat
+# Homework Overview
+
+## Project Structure
+
+### parkage name:com.tw.wechat
     
-*    |----- MyApplication: App的Application,启动初始化GreenDao数据库和屏幕尺寸适配
-*    |----- TweetActivity: Tweet列表界面
-*    |----- TweetController: TweetActivity的业务控制器,用于加载tweet数据
-*    |----- adapter
-	* |BaseRecyclerViewAdapter: 抽象的BaseAdapter
-   	* |----- TweetMomentsAdapter: 朋友圈列表的Adapter
-    * |----- BaseRecyclerViewHolder: 抽象的BaseHolder
-    	* |----- CircleBaseViewHolder: 朋友圈的基本holder,用于处理公共数据和view
-   		* |----- MultiImageMomentsVH: 九宫格类型的Holder
-    * |----- BaseMomentVH: TweetMomentsAdapter的抽象接口,用于子类的数据传递 	
-    * |----- HostViewHolder: recycle头部、照片墙的hodler,
-* |----- entity
-	* |----- Comment: 朋友圈评论的实体类
-    	* |----- Photo: 朋友圈照片的实体类
-    	* |----- Tweet: 朋友圈tweet的实体类
-        * |----- User: 用户实体类,与发送者一致
-* |----- dao: entity中实体类GreenDao派生类
-* |-----event
-	* |-----OnRefreshListener: 上拉加载更多、下拉刷新的回调
-    * |-----VCCallBack: vc模式,Control层和View层之间的回调借口
-    * |----- ViewListener: 用于Adapter中与主界面的交互回调
-* |----- retrofit
-	* |-----Interceptor: 拦截器,用于Http请求时,请求头的设置
-    * |----- RetrofitManager: Retrofit的管理类,初始化Retrofit,桥接Retrofit与OKHttp
-    * |----- TweetApi: 朋友圈数据加载结果的回调接口
-* |-----widget
-	* |----- CircleViewHelper: 用于评论框弹出与隐藏时，辅助当前Item滑动的位置
-    * |----- comment
-    	* |----- CommentBox: 评论输入框
-        * |----- CommentWidget: 文字评论展示控件
-        * |----- ContentWidget: 朋友圈文字内容展示控件,实现"全文"和'收起"功能
-    * |----- popup
-    	* |----- CommentPopup: 朋友圈点赞、添加评论的Pop
-        * |----- DeleteCommentPopup: 删除评论的popup
-    * |----- pullryc
-    	* |----- CircleRecyclerView: 自定义的下拉Recycle,加载Tweet列表
-        * |----- PullRefreshFooter: 的加载更多footView
-        * |----- wrapperadapter:recyclerview的header和footer试图位移的辅助类包
-* |----- utils 
-	* |----- Glide的TransForm: Glide的TransForm辅助类
-	* |----- ViewOffsetHelper: 位移偏移辅助类
-	* |----- TextStateManager: 文字展示状态辅助类
-* |----- photo
-	* |----- PhotoWidget: 图片展示控件,单图
-    * |----- PhotoContents: 图片列表展示控件
+*    |----- **MyApplication**: App's Application,App's Application, for initialization GreenDao database and screen adaptation
+*    |----- **TweetActivity**: Tweet list Activity
+*    |----- **TweetController**: TweetActivity business controller for loading tweets data
+*    |----- **adapter**
+	* |**BaseRecyclerViewAdapter**: abstract BaseAdapter
+    	* |----- **TweetMomentsAdapter**: Adapter for TweetActivity's tweets list
+    * |----- **BaseRecyclerViewHolder**: abstract BaseHolder
+    	* |----- **CircleBaseViewHolder**: The basic holder of the circle of friends, used to process public data and views
+   		* |----- **MultiImageMomentsVH**: Holder of the nine-square pictures
+    * |----- **BaseMomentVH**: Abstract interface for TweetMomentsAdapter andr for data passing by subclasses 	
+    * |----- **HostViewHolder**: photo wall hodler,the head of Recyclerview,
+* |----- **entity**
+	* |----- **Comment**: Entity class of friend circle comments
+    	* |----- **Photo**: Entity class of friend circle photos
+    	* |----- **Tweet**: Entity class of friend circle tweets
+        * |----- **User**: Entity class of friend circle user,same with sender
+* |----- **dao**: entity class created by GreenDao derived class
+* |-----**event**
+	* |-----**OnRefreshListener**: the callbackk for refresh and loadMore listener
+    * |-----**VCCallBack**: in vc model,the callBack between of Control and View
+    * |----- **ViewListener**: the callBack for using in adapter to listening view's regular click event
+* |----- **retrofit**
+	* |-----**Interceptor**: interceptor,setting request header when Http requets
+    * |----- **RetrofitManager**: Retrofit management class, initialize Retrofit, bridge Retrofit and OKHttp
+    * |----- **TweetApi**: the callBack for  loading service data
+* |-----**widget**
+	* |----- **CircleViewHelper**: Used to assist the current item slide position when the comment box pops up and hides
+    * |----- **comment**
+    	* |----- **CommentBox**: A widget for intput comment text
+        * |----- **CommentWidget**: A Widget for comment text display
+        * |----- **ContentWidget**: A widget for Tweet's content display,and control it "open" or "close"
+    * |----- **popup**
+    	* |----- **CommentPopup**: the add comment's or like's pop
+        * |----- **DeleteCommentPopup**: the delte comment's pop
+    * |----- **pullryc**
+    	* |----- **CircleRecyclerView**: Customized drop-down Recycle, loading the Tweet list wirh refreshing animation
+        * |----- **PullRefreshFooter**: the footview of CircleRecyclerView's foot
+        * |----- **wrapperadapter**:Auxiliary class for header and footer view moving
+* |----- **utils** 
+	* |----- **Glide的TransForm**: Auxiliary class of Glide TransForm
+	* |----- **ViewOffsetHelper**: Auxiliary class of offset
+	* |----- **TextStateManager**: Auxiliary class of save Tweet's content displaying state
+* |----- **photo**
+	* |----- **PhotoWidget**: Picture display widget, single picture
+    * |----- **PhotoContents**: Picture list  diasplay widget,contains PhotoWidget
        
        
-## 完成内容
+## Complete Content
 
-* ### 基本功能
-	* 照片墙、用户信息、Tweet列表数据获取,异常数据处理
-    * 机型版本适配,如SDK_INT小于16无法预览照片
-    * Tweet、用户信息本地数据库保存,便于快速获取数据
-    * 下拉刷新、分页加载(每次只加载五条)
-    * 图片异常加载处理
+* ### Basic
+	* Photo Wall, User Information, Tweet List Data Acquisition, Abnormal Data Processing
+    * SDK Adaptation(API less than 16,cannot preview picture)
+    * Tweet、User information is saved in local database to facilitate quick access to data
+    * Drop-down refresh, paging load (only five at a time)
+    * Image Abnormal Loading Processing
     
-* ### 扩展功能
-    * 照片预览(API16+)
-    * 文字内容的折叠与展示
-    * 文字评论功能
-    * 点赞响应事件,头像圆角加载
-    * 刷新联动小圆圈
-    
-* ### 待完善
-    * 软键盘被部分被遮挡问题
-    * recycleview scroll的指定评论框的滑动
+* ### Extend
 
-## 其他
-* 3rd Libs参考根目录下config.gradle
-* 特殊情况下需要使用VPN,才能访问到数据
-* 个别图片的主机地址无法访问,采用占位图替换
-* 最后结果,参考根目录下效果图.
+    * preview pictures(API 16+)
+    * the text content's open or close
+    * Text comment function
+    * Point praise response event, head fillet loading
+    * Refreshing small circle icon
+    
+* ### To Be Perfect
+    * The comment input box is partially blocked by the soft keyboard
+    * Recycleview slides to the exact location of the comment box
+
+## Others
+* 3rd Libs,reference root directory's config.gradle
+* In special cases, VPN is needed to access data
+* The host address of individual pictures is inaccessible and replaced by a placeholder picture
+* Finally, refer to the effect picture in the root directory
 
 
-### 谢谢所有人,谢谢!
+### Thanks for everyone!
 
-    
-    
-    
-    
+
     
