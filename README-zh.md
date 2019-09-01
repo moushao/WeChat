@@ -19,7 +19,7 @@
     	* |----- **Tweet**: 朋友圈tweet的实体类
         * |----- **User**: 用户实体类,与发送者一致
 * |----- **dao**: entity中实体类GreenDao派生类
-* |-----event**
+* |----- **event**
 	* |-----OnRefreshListener**: 上拉加载更多、下拉刷新的回调
     * |-----VCCallBack**: vc模式,Control层和View层之间的回调借口
     * |----- **ViewListener**: 用于Adapter中与主界面的交互回调
@@ -27,7 +27,7 @@
 	* |-----Interceptor**: 拦截器,用于Http请求时,请求头的设置
     * |----- **RetrofitManager**: Retrofit的管理类,初始化Retrofit,桥接Retrofit与OKHttp
     * |----- **TweetApi**: 朋友圈数据加载结果的回调接口
-* |-----widget**
+* |----- **widget**
 	* |----- **CircleViewHelper**: 用于评论框弹出与隐藏时，辅助当前Item滑动的位置
     * |----- **comment**
     	* |----- **CommentBox**: 评论输入框
