@@ -8,7 +8,7 @@
 *    |----- **TweetActivity**: Tweet list Activity
 *    |----- **TweetController**: TweetActivity business controller for loading tweets data
 *    |----- **adapter**
-	* |**BaseRecyclerViewAdapter**: abstract BaseAdapter
+    * |**BaseRecyclerViewAdapter**: abstract BaseAdapter
     	* |----- **TweetMomentsAdapter**: Adapter for TweetActivity's tweets list
     * |----- **BaseRecyclerViewHolder**: abstract BaseHolder
     	* |----- **CircleBaseViewHolder**: The basic holder of the circle of friends, used to process public data and views
