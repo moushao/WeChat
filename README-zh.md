@@ -1,5 +1,5 @@
 # Homework 说明
-##项目架构
+## 项目架构
 ### 包名:com.tw.wechat
     
 *    |----- MyApplication: App的Application,启动初始化GreenDao数据库和屏幕尺寸适配
