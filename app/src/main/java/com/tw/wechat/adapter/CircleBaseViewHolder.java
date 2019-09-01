@@ -2,6 +2,7 @@ package com.tw.wechat.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +14,12 @@ import android.widget.TextView;
 
 
 import com.bumptech.glide.Glide;
+import com.tw.wechat.BuildConfig;
 import com.tw.wechat.R;
 import com.tw.wechat.entity.Comment;
 import com.tw.wechat.entity.Tweet;
 import com.tw.wechat.event.ViewListener;
+import com.tw.wechat.utils.ToastUtils;
 import com.tw.wechat.widget.photo.SimpleObjectPool;
 import com.tw.wechat.utils.ImageLoadManager;
 import com.tw.wechat.utils.UIHelper;
@@ -248,6 +251,10 @@ public abstract class CircleBaseViewHolder extends BaseRecyclerViewHolder<Tweet>
         @Override
         public void onClick(View v) {
             Tweet info = (Tweet) v.getTag(R.id.moment_data_tag_id);
+            if (Build.VERSION.SDK_INT < 16) {
+                ToastUtils.showToast(mContext, "API小于16无法使用此功能");
+                return;
+            }
             if (info != null) {
                 commentPopup.updateMomentInfo(info);
                 commentPopup.showPopupWindow(commentImage);

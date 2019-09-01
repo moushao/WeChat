@@ -211,8 +211,8 @@ public class TweetActivity extends AppCompatActivity implements CircleRecyclerVi
 
     //照片预览
     private void previewPicture(List<Photo> images, int position) {
-        if (Build.VERSION.SDK_INT < 16) {
-            ToastUtils.showToast(mContext, "十分抱歉,由于机子型号太小,无法预览图片");
+        if (Build.VERSION.SDK_INT < 19) {
+            ToastUtils.showToast(mContext, "API小于19,无法预览图片");
             return;
         }
         List<LocalMedia> medias = new ArrayList<>();

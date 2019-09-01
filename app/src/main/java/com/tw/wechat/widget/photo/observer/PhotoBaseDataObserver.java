@@ -3,9 +3,9 @@ package com.tw.wechat.widget.photo.observer;
 import android.database.DataSetObserver;
 
 /**
- * Created by 大灯泡 on 2016/11/9.
+ * 类名: {@link PhotoImageObservable}
+ * <br/> 功能描述:观察者
  */
-
 public class PhotoBaseDataObserver extends DataSetObserver {
     @Override
     public void onChanged() {

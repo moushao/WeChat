@@ -290,10 +290,10 @@ public class CircleRecyclerView extends FrameLayout {
                 setCurrentStatus(REFRESHING);
                 onRefreshListener.onLoadMore();
             }
-            if (scrollSize > 30 && refreshIcon.getVisibility() == VISIBLE) {
+            if (scrollSize > 50 && refreshIcon.getVisibility() == VISIBLE) {
                 refreshIcon.setVisibility(INVISIBLE);
                 //iconObserver.catchPullEvent(dy);
-            } else if (scrollSize <= 30 && refreshIcon.getVisibility() == INVISIBLE) {
+            } else if (scrollSize <= 50 && refreshIcon.getVisibility() == INVISIBLE) {
                 refreshIcon.setVisibility(VISIBLE);
             }
         }

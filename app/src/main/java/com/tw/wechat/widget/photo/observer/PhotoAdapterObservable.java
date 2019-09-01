@@ -1,9 +1,9 @@
 package com.tw.wechat.widget.photo.observer;
 
 /**
- * Created by 大灯泡 on 2016/11/9.
+ * 类名: {@link PhotoImageObservable}
+ * <br/> 功能描述:观察者
  */
-
 public class PhotoAdapterObservable extends PhotoImageObservable<PhotoBaseDataObserver> {
 
     public void notifyChanged() {

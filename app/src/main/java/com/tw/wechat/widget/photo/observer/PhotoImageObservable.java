@@ -2,12 +2,11 @@ package com.tw.wechat.widget.photo.observer;
 
 import java.util.ArrayList;
 
-/**
- * Created by 大灯泡 on 2016/11/9.
- * <p>
- * 观察者
- */
 
+/**
+ * 类名: {@link PhotoImageObservable}
+ * <br/> 功能描述:观察者
+ */
 public abstract class PhotoImageObservable<T> {
 
     protected final ArrayList<T> mObservers = new ArrayList<T>();
